@@ -5,7 +5,7 @@
 <html>
    <head>
       <meta charset="UTF-8">
-      <title>Insert title here</title>
+      <title>글쓰기</title>
       <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
       
@@ -41,6 +41,7 @@
 					else{
 						$("#b_writeForm").attr({
 							"method" : "post",
+							"enctype":"multipart/form-data",
 							"action" : "/board/freeboardInsert"
 						});
 						
@@ -69,9 +70,9 @@
    </head>
    <body>
    	<div class="container" style="width: 70%;">
-   	  <h3>게시판글 수정 화면</h3>
+   	  <h3>글쓰기</h3>
       <div class = "contentTB">
-         <form id = "b_writeForm" name = "b_writeForm">
+         <form id = "b_writeForm" name = "b_writeForm" >
             <table class="table table-condensed">
                <colgroup>
                   <col width="17%" />
@@ -86,21 +87,26 @@
                <tr>
                   <td class = "ac">글 제 목</td>
                   <td colspan = "3">
-                  <input type = "text" id = "f_title" name = "f_title" value = ""><td>
+                  <input type = "text" id = "f_title" name = "f_title"  /></td>
                </tr>
                <tr>
                   <td class = "ac">글 내 용</td>
                   <td colspan = "3">
-                  <textarea name = "f_text" id = "f_text" rows = "10" cols = "70"></textarea></td>
+                  <textarea name = "f_text" id = "f_text" rows = "10" cols = "70" ></textarea></td>
                </tr>
-               
+                <tr>
+                  <td class = "ac">파일첨부</td>
+                  <td colspan = "3">
+                 <input type="file" class="form-control" id="file" name="file"></td>
+               </tr>
+             
+             
             </table>
          </form>
-         
-          <div class="text-right">
-           <input type = "button" id = "boardInsertBtn" name = "boardInsertBtn" class="btn btn-success" value = "입력">
-           <input type = "button" id = "boardCancelBtn" name = "boardCancelBtn" class="btn btn-success" value = "취소">
-           <input type = "button" id = "boardListBtn" name = "boardListBtn" class="btn btn-info" value = "목록">
+                <div class="text-right">
+           <input type = "button" id = "boardInsertBtn" name = "boardInsertBtn" class="btn btn-success" value = "입력" />
+           <input type = "button" id = "boardCancelBtn" name = "boardCancelBtn" class="btn btn-success" value = "취소" />
+           <input type = "button" id = "boardListBtn" name = "boardListBtn" class="btn btn-info" value = "목록" />
       	  </div>
       </div>
       

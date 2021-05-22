@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix = "tag" tagdir = "/WEB-INF/tags/" %>
 <!DOCTYPE html>
 <html>
    <head>
@@ -29,7 +31,7 @@
 		<script type = "text/javascript"  src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 		<script type = "text/javascript"  src = "/resources/include/js/common.js"></script>
 		<script type = "text/javascript" src = "/resources/include/dist/js/bootstrap.min.js"></script>
-		<script type="text/javascript">
+		<script type = "text/javascript">
             $(function(){
             	/* 검색 후 검색 대상과 검색 단어 출력 */
           		/* if ('${param.keyword}'!="") {
@@ -88,9 +90,9 @@
             	
           		/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
           		$(".goDetail").click(function() {
-					var b_num = $(this).parents("tr").attr("data-num");
+					var f_no = $(this).parents("tr").attr("data-num");
 					$("#f_no").val(f_no);
-					//console.log("글번호:" +b_num);
+					console.log("글번호:" +f_no);
 					//상세 페이지로 이동하기 위해 form 추가 (id : detailForm)
 					$("#detailForm").attr({
 						"method" : "get",
@@ -99,6 +101,9 @@
 					$("#detailForm").submit();
 				});
 			});
+            
+         
+            
             
             /* 검색을 위한 실질적인 처리 함수 */
             function goPage() {
@@ -143,9 +148,12 @@
             <table summary = "게시판 리스트" class = "table">
                <colgroup>
                   <col width ="10%" />
-                  <col width ="62%" />
+                  <col width ="42%" />
                   <col width ="15%" />
                   <col width ="13%" />
+                  <col width ="7%" />
+                  <col width ="7%" />
+                  <col width ="6%" />
                </colgroup>
                <thead>
                   <tr>
@@ -153,6 +161,9 @@
                      <th class="text-center">글제목</th>
                      <th data-value="f_regdate" class="order">작성일</th>
                      <th class="text-center">작성자</th>
+                     <th data-value="f_recoment" class="order text-center">추천수</th>
+      				 <th data-value="f_views" class="order text-center">조회수</th>
+      				 <th class="text-center">이미지</th>
                   </tr>
                </thead>
                <tbody id="list" class="table-striped" >
@@ -164,7 +175,17 @@
       								<td>${board.f_no}</td>
       								<td class="goDetail text-center">${board.f_title}</td>
       								<td class="text-left">${board.f_regdate}</td>
-      								<td class="name">mta</td>
+      								<td class="user_id">mta</td>
+      								<!--추천수 & 조회수  -->
+      								<td>0</td>
+      								<td>0</td>
+      								<!-- 파일 삽입여부  -->
+      								<td class="text-center">
+		                              	<c:if test="${not empty board.f_file }">
+		                              	 		yes
+		                              	</c:if>
+		                              
+									</td>
       							</tr>
       						</c:forEach>
       					</c:when>
@@ -176,11 +197,16 @@
       				</c:choose>
                </tbody>
             </table>
+            	<%-- ===============글쓰기 버튼 출력 시작 ===============--%>
+            	<div class="contentBtn text-right">
+               			<input type="button" value="글쓰기" id="insertFormBtn" class="btn btn-primary btn-sm">
+            	</div>
+            
            </div>
            <%--==================리스트 종료====================  --%>
            
            <%--==================페이징 출력 시작====================  --%>
-           <div class="text-center">
+           <%-- <div class="text-center">
            		<ul class="pagination">
            			<c:if test="${pageMaker.prev}">
            				<li class="paginate_button previous">
@@ -199,14 +225,15 @@
            					</li>
            			</c:if>
            		</ul>
-           </div>
+           </div> --%>
+           
+           <tag:simple  pageNum= "${pageMaker.cvo.pageNum}" amount="${pageMaker.cvo.amount}"
+           				startPage="${pageMaker.startPage}" endPage="${pageMaker.endPage}"
+           				prev="${pageMaker.prev}" next="${pageMaker.next}" />
            
            <%--==================페이징 출력 종료====================  --%>
            
-           <%-- ===============글쓰기 버튼 출력 시작 ===============--%>
-            	<div class="contentBtn text-right">
-               			<input type="button" value="글쓰기" id="insertFormBtn" class="btn btn-primary btn-sm">
-            	</div>
+         
     
       
    	</div>
