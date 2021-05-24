@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.mta.common.vo.PageDTO;
+import com.spring.mta.service.fcommentService;
 import com.spring.mta.service.freeBoardService;
+import com.spring.mta.vo.fcommentVO;
 import com.spring.mta.vo.freeBoardVO;
 
 import lombok.AllArgsConstructor;
@@ -28,6 +30,7 @@ import lombok.extern.log4j.Log4j;
 public class freeBoardController {
 	
 	private freeBoardService freeboardService;
+	private fcommentService fcommentservice;
 	
 	/*********************************************************
 	 * 글목록 구현하기(페이징 처리 목록 조회)
@@ -92,12 +95,16 @@ public class freeBoardController {
 	 *********************************************************/
 	@RequestMapping(value="/freeboardDetail", method = RequestMethod.GET)
 
-	public String boardDetail(@ModelAttribute("data") freeBoardVO bvo, Model model) {
+	public String boardDetail(@ModelAttribute("data") freeBoardVO bvo,fcommentVO fco, Model model) {
 		log.info("freeboardDetail 호출 성공");
 		//log.info("bvo = " + bvo);
 		
 		freeBoardVO detail = freeboardService.freeboardDetail(bvo);
 		model.addAttribute("detail", detail);
+		
+		List<fcommentVO> fcommentList =  fcommentservice.fcommentList(fco);
+		model.addAttribute("fcommentList",fcommentList);
+		
 		return "board/freeboardDetail";
 	}
 	

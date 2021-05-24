@@ -3,6 +3,8 @@
 <configuration>
 	 <typeAliases>
 		<typeAlias type="com.spring.mta.vo.freeBoardVO" alias="board"/>
+		<typeAlias type="com.spring.mta.vo.fcommentVO" alias="comment"/>
 	</typeAliases>
+	 
 	 
 </configuration>

@@ -26,6 +26,11 @@
        			height: 200px;
        			width: 400px;
        }
+       
+       #fc_insertBtn{
+       		height: 110px;
+       		width: 70px;
+       }
       </style>
       <script type = "text/javascript"  src = "/resources/include/js/jquery-3.6.0.min.js"></script>
       <script type = "text/javascript"  src = "/resources/include/js/common.js"></script>
@@ -55,25 +60,37 @@
             	 location.href = "/board/freeWriteForm";
             });
            	
-            /* 답변 버튼 클릭 시 처리 이벤트 */
-            $("#freeboardReply").click(function () {
-				$("#f_data").attr({
-					"method" : "post",
-					"action" : "/board/freeReplyForm"
-				});
-				$("#f_data").submit();
-			});
+           
             
             /* 목록 버튼 클릭 시 처리 이벤트 */
             $("#boardListBtn").click(function(){
                 location.href = "/board/freeboard";
              });
+            
+            /* 댓글달기 버튼 클릭 시 처리 이벤트 */
+        	   $("#fc_insertBtn").click(function () {
+				$("#fcomment").attr({
+					"method" : "post",
+					"action" : "/fcomment/fcommentInsert"
+				});
+				$("#fcomment").submit();
+			}); 
+            
+        	   /* 댓글삭제 버튼 클릭 시 처리 이벤트 */
+               $("#fcdeleteBtn").click(function(){
+            	   console.log("댓글삭제클릭");
+               	if(confirm("정말 삭제하시겠습니까?")){
+   					$("#fc_form").attr("action","/fcomment/fcDelete");
+   					$("#fc_form").submit();
+   				}
+               });
+            
          });
          </script>
       
    </head>
    <body>
-   <div class = "container">
+   <div class = "container-fluid">
          <form name = "f_data" id = "f_data" method = "post">
             <input type = "hidden" name = "f_no" value = "${detail.f_no}">
          </form>
@@ -109,20 +126,85 @@
    				</tr>
    				<tr>
    					<td class="col-md-3">조회수 </td>
-   					<td colspan="3" class="col-md-9 text-left">${detail.f_views}</td>
+   					<td colspan="3" class="col-md-9 text-left">${detail.f_viewsCnt}</td>
    				</tr>
    				<tr>
    					<td class="col-md-3">추천수 </td>
-   					<td colspan="3" class="col-md-9 text-left">${detail.f_recoment}</td>
+   					<td colspan="3" class="col-md-9 text-left">${detail.f_recomentCnt}</td>
    				</tr>
    				<tr>
    					<td class="col-md-3">파일첨부 </td>
    					<td colspan="3" class="col-md-9 text-left">
 						<img class="image_size" src="/uploadStorage/board/${detail.f_file}" /></td>
    				</tr>
-   			
    			</table>
-   			
+   			<hr />
+			<h4>댓글 작성</h4>
+			 	<div class="container-fluid">
+			 	<%-- 	<form name = "f_data" id = "f_data" method = "post">
+            			<input type = "hidden" name = "f_no" value = "${detail.f_no}">
+         			</form> --%>
+			 		<form id="fcomment" name="fcomment">
+			 			 <input type = "hidden" name = "f_no" value = "${detail.f_no}" />
+			 			<textarea rows="5" class="col-md-10" maxlength="2000" id="fc_text" name="fc_text"></textarea>
+			 			<button type="button" id="fc_insertBtn" class="btn btn-primary btn-sm" >댓글등록</button>
+			 		</form>
+			 		
+			 		<hr />
+			 		
+			 		
+			 		 		
+		         <%-- ====================== 댓글 리스트 시작 ====================== --%>
+		         <div id = "fcommentList">
+		       
+		            <table summary = "댓글 리스트" class = "table">
+		               <colgroup>
+		               	  <col width ="5%" />
+		                  <col width ="5%" />
+		                  <col width ="10%" />
+		                  <col width ="10%" />
+		                  <col width ="60%" />
+		                  <col width="10%" />
+		               </colgroup>
+		               <thead>
+		                  <tr>
+		                  	 <th data-value="fc_no" class="">댓글번호</th>
+		                     <th data-value="f_no" class="">글번호</th>
+		                     <th class="text-center">유저아이디</th>
+		                     <th class="text-center">댓글등록일</th>
+		                     <th class="text-center">댓글내용</th>
+		                  </tr>
+		               </thead>
+		               <tbody id="list" class="table-striped" >
+		      				<!-- 데이터 출력 -->
+		      				<c:choose>
+		      					<c:when test="${not empty fcommentList}">
+		      						<c:forEach var="comment" items="${fcommentList}" varStatus="status">
+		      							  <form id="fc_form" method="post">
+									         	<input type = "hidden" name = "fc_no" value = "${comment.fc_no}">
+									      		<%-- <input type = "hidden" name = "f_no" value = "${comment.f_no}"> --%>
+									      	</form>
+		      							<tr class="text-center" data-num="${comment.fc_no}">
+		      								
+		      								<td class="text-centr">유저아이디</td>
+		      								<td class="text-left">${comment.fc_regdate}</td>
+		      								<td class="text-center">${comment.fc_text }</td>
+		      								<td><button class="btn btn-primary btn-sm" type="button" id="fcdeleteBtn" name="fcdeleteBtn">삭제</button>
+		      								</td>
+		      							</tr>
+		      							
+		      						</c:forEach>
+		      					</c:when>
+		      					<c:otherwise>
+		      						<tr>
+		      							<td colspan="4" class="tac text-center">등록된 댓글이 존재하지않습니다</td>
+		      						</tr>
+		      					</c:otherwise>
+		      				</c:choose>
+		               </tbody>
+		            </table>
+		           
+			 	</div>  			
    			
    		</div>
    	

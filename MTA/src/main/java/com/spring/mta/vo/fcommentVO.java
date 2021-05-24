@@ -1,8 +1,10 @@
 package com.spring.mta.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class fcommentVO {
 	private int fc_no = 0;	//자게_덧글번호
 	private String fc_text = ""; // 자게_덧글내용
