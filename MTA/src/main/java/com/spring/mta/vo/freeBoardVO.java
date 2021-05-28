@@ -15,9 +15,9 @@ public class freeBoardVO extends commonVO{
 	private String 	f_text		="";//글내용
 	private String f_regdate;		//글등록일
 	
-	private int	f_recomentCnt   	=0;//추천수
+	private int	f_recommentCnt   	=0;//추천수
 	private int f_replyCnt 			=0;//댓글수
-	private int f_viewsCnt = 0;		//글조회수
+	private int f_viewsCnt 			=0;//글조회수
 	
 	private String user_id = "";	//유저아이디
 	

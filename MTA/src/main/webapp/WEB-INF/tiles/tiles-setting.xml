@@ -1,27 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
-		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
-		
-<!-- <tiles-definitions>
+      "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+      
+<tiles-definitions>
 
-	<definition name="intro" template="/WEB-INF/views/template/client/mainLayout.jsp">
-		<put-attribute name="title" value="나의 첫 스프링 사이트 인트로" />
-		<put-attribute name="header" value="/WEB-INF/views/template/client/header.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/views/template/client/footer.jsp" />
-	</definition>
+   <definition name="index" template="/WEB-INF/views/template/client/mainLayout.jsp">
+      <put-attribute name="title" value="MTA인트로" />
+      <put-attribute name="header" value="" />
+      <put-attribute name="footer" value="" />
+   </definition>
 
-	<definition name="content" template="/WEB-INF/views/template/client/contentLayout.jsp">
-		<put-attribute name="title" value="나의 첫 스프링 사이트" />
-		<put-attribute name="header" value="/WEB-INF/views/template/client/header.jsp" />
-		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/WEB-INF/views/template/client/footer.jsp" />
-	</definition>
-	
-	<definition name="board/*" extends="content">
-		<put-attribute name="title" value="기본 게시판" />
-		<put-attribute name="body" value="/WEB-INF/views/board/{1}.jsp" />
-	</definition>
-	
-	
-	
-</tiles-definitions> -->
+ <definition name="content" template="/WEB-INF/views/template/client/contentLayout.jsp">
+      <put-attribute name="title" value="나의 첫 스프링 사이트" />
+      <put-attribute name="header" value="/WEB-INF/views/template/client/header.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="footer" value="/WEB-INF/views/template/client/footer.jsp" />
+   </definition> 
+   
+   <definition name="mainpage/*" extends="content">
+      <put-attribute name="title" value="MTA메인페이지" />
+      <put-attribute name="body" value="/WEB-INF/views/mainpage/{1}.jsp" />
+   </definition>
+   
+   <definition name="board/*" extends="content">
+      <put-attribute name="title" value="MTA게시판" />
+      <put-attribute name="body" value="/WEB-INF/views/board/{1}.jsp" />
+   </definition>
+   
+    <definition name="user/*" extends="content">
+      <put-attribute name="title" value="MTA회원" />
+      <put-attribute name="body" value="/WEB-INF/views/user/{1}.jsp" />
+   </definition>
+   
+   <definition name="mboard/*" extends="content">
+      <put-attribute name="title" value="MTA음악게시판" />
+      <put-attribute name="body" value="/WEB-INF/views/mboard/{1}.jsp" />
+   </definition>
+
+	<definition name="sboard/*" extends="content">
+      <put-attribute name="title" value="MTA고객센터" />
+      <put-attribute name="body" value="/WEB-INF/views/sboard/{1}.jsp" />
+     </definition> 
+     
+ 	<definition name="/etc/*" extends="content">
+      <put-attribute name="title" value="MTA기타문서" />
+       <put-attribute name="body" value="/WEB-INF/views/etc/{1}.jsp" />
+     </definition> 
+
+</tiles-definitions>

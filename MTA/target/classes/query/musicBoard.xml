@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mta.dao.MusicBoardDao">
+
+		<!-- 뮤직 차트 추출(추천수 내림차순)-->
+		<select id="musicChart" parameterType="mboard" resultType="mboard" >
+			select m_title, user_id, m_recommentCnt, m_genre from music_board 
+			order by m_recommentCnt desc
+		</select>
+		
+		<select id="musicBoardList" parameterType="mboard" resultType="mboard">
+
+
+			SELECT
+			
+			m_no, m_title, m_name, m_coverimage,m_file, m_regdate, M_RECOMMENTCNT, m_views, user_id, m_price, m_isfree, m_genre
+		      	 FROM  music_board		
+		      	
+			
+		</select>
+		
+		<!-- 반복적으로 사용하는 sql문  -->
+		<sql id="boardSearch">
+			<if test="search == 'b_title'">
+		<![CDATA[ b_title LIKE '%' || #{keyword}||'%']]>
+			</if>
+			<if test="search =='b_content'">
+		<![CDATA[b_content LIKE '%' || #{keyword} ||'%']]>
+			</if>
+			<if test="search == 'b_name'">
+		<![CDATA[b_name LIKE '%' ||#{keyword} ||'%']]>
+			</if>
+		</sql>
+		
+		
+		
+		<insert id="musicBoardInsert" parameterType="mboard">
+			INSERT INTO music_board (
+		    m_no,
+		    m_title,
+		    m_name,
+		    m_coverimage,
+		    m_bpm,
+		    m_explan,
+		    m_file,
+		    user_id,
+		    m_price,
+		    m_isfree,
+		    m_genre
+		) VALUES (
+		music_board_sequence.nextval, #{m_title}, #{m_name}, #{m_coverimage}, #{m_bpm}, #{m_explan}, #{m_file}, #{user_id}, #{m_price}, #{m_isfree}, #{m_genre}
+		)
+		</insert>
+		
+		<select id="boardDetail" parameterType="mboard" resultType="mboard">
+		
+			SELECT
+		
+			m_no, m_title, m_name, m_coverimage, m_bpm, m_explan, m_file,
+			m_regdate, M_RECOMMENTCNT, m_views, user_id, m_price, m_isfree, m_genre
+			
+			FROM music_board
+			
+			where m_no = #{m_no}
+		
+		
+		</select>
+		
+		
+		<update id="recommend" parameterType="mboard" >
+		update music_board
+		set M_RECOMMENTCNT = M_RECOMMENTCNT+1 
+		where m_no = #{m_no}
+		
+		</update>
+</mapper>

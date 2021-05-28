@@ -41,6 +41,10 @@ public class freeBoardServiceImpl implements freeBoardService {
 		// TODO Auto-generated method stub
 		freeBoardVO detail = null;
 		detail = fboardDao.freeboardDetail(bvo);
+		
+		fboardDao.freeboardUpdateViews(bvo.getF_no());
+		
+		//fboardDao.freeRecomment(bvo.getF_no());
 		if(detail!=null) {
 			detail.setF_text(detail.getF_text().toString().replaceAll("\n", "<br>"));
 		}
@@ -87,6 +91,16 @@ public class freeBoardServiceImpl implements freeBoardService {
 		result = fboardDao.freeboardUpdate(bvo);
 		return result;
 	}
+
+	@Override
+	public int freeRecomment(int num) {
+		// TODO Auto-generated method stub
+				int result = 0;
+				result = fboardDao.freeRecomment(num);
+				return result;
+	}
+
+	
 
 
 }

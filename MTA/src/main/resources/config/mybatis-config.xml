@@ -4,6 +4,9 @@
 	 <typeAliases>
 		<typeAlias type="com.spring.mta.vo.freeBoardVO" alias="board"/>
 		<typeAlias type="com.spring.mta.vo.fcommentVO" alias="comment"/>
+		<typeAlias type="com.spring.mta.vo.UserVO" alias="user"/>
+		<typeAlias type="com.spring.mta.vo.MusicBoardVO" alias="mboard"/>
+		<typeAlias type="com.spring.mta.vo.serviceVO" alias="service"/>
 	</typeAliases>
 	 
 	 

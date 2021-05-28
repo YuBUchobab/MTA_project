@@ -14,6 +14,10 @@ public interface freeBoardService {
 	public int freeboardDelete(int f_no);
 	public freeBoardVO freeupdateForm(freeBoardVO bvo);
 	public int freeboardUpdate (freeBoardVO bvo) throws Exception;
+	
+	public int freeRecomment(int num);
+	
+	
 
 
 	

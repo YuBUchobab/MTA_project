@@ -1,10 +1,9 @@
 package com.spring.mta.controller;
 
-import java.util.List;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,8 +22,7 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class fcommentController {
 
-	private fcommentService fcommentservice;
-	private freeBoardService freeboardService;
+	private fcommentService fcommentservice;private freeBoardService freeboardService;
 	
 	/*********************************************************
 	 * 댓글쓰기 구현하기
@@ -40,17 +38,11 @@ public class fcommentController {
 		String url = "";
 		result = fcommentservice.fcommentInsert(fco);
 		if(result == 1) {
-			url = "/board/freeboardDetail";
+			url = "/board/freeboardDetail?f_no="+bvo.getF_no();
 		}
 		
-		freeBoardVO detail = freeboardService.freeboardDetail(bvo);
-		model.addAttribute("detail", detail);
-		
-		List<fcommentVO> fcommentList =  fcommentservice.fcommentList(fco);
-		model.addAttribute("fcommentList",fcommentList);
-		
-		
-		return url;
+	
+		return "redirect:"+url;
 	}
 	
 
@@ -65,17 +57,14 @@ public class fcommentController {
 	         String url = "";
 	         
 	         result = fcommentservice.fcommentDelete(fco.getFc_no());
+	         			
 	         
 	         if(result==1) {
-	            url="/board/freeboardDetail?f_no="+fco.getF_no();
+	            url="/board/freeboardDetail?f_no="+bvo.getF_no();
 	         }
 	         
 	         
-	         freeBoardVO detail = freeboardService.freeboardDetail(bvo);
-		 	 model.addAttribute("detail", detail);
-		 		
-		 	 List<fcommentVO> fcommentList =  fcommentservice.fcommentList(fco);
-		 	 model.addAttribute("fcommentList",fcommentList);
+	      
 	         
 	         return "redirect:"+url;
 	      }

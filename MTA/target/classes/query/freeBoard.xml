@@ -48,10 +48,10 @@
 		 <select id="freeboardList" parameterType="board" resultType="board">
 		 <![CDATA[
 		 	SELECT 
-		 	f_no, f_title, f_text, to_char(f_regdate, 'YYYY-MM-DD') as f_regdate, f_file
+		 	f_no, f_title, f_text, to_char(f_regdate, 'YYYY-MM-DD') as f_regdate, f_file , f_viewsCnt , f_recommentCnt
 		 	FROM ( 
 		 		SELECT /*+ INDEX_DESC(free_board free_board_pk)*/
-		 				rownum as rnum, f_no, f_title, f_text , f_regdate, f_file
+		 				rownum as rnum, f_no, f_title, f_text , f_regdate, f_file, f_viewsCnt ,f_recommentCnt
 		 				from free_board
 		 	WHERE ]]>
 		 	<trim prefix="(" suffix=") AND " prefixOverrides="AND">
@@ -102,7 +102,7 @@
 		<select id="freeboardDetail" parameterType="board" resultType="board">
 			/* Board - freeboardDetail */
 			SELECT
-					f_no, f_title, f_text, to_char(f_regdate, 'YYYY-MM-DD HH:MM:SS') as f_regdate, f_file
+					f_no, f_title, f_text, to_char(f_regdate, 'YYYY-MM-DD HH:MM:SS') as f_regdate, f_file , f_viewsCnt, f_recommentCnt
 			FROM free_board
 			WHERE f_no = #{f_no}
 		</select> 
@@ -137,5 +137,17 @@
 			  b_pwd = #{b_pwd} 
 		</if>
 		 -->
+		 
+		 <update id="freeboardUpdateViews" parameterType="int">
+			update free_board set f_viewsCnt = f_viewsCnt + 1
+			where f_no = #{f_no}
+		</update> 
+		
+		 <update id="freeRecomment" parameterType="int" >
+			update free_board set f_recommentCnt = f_recommentCnt + 1
+			where f_no = #{f_no}
+		</update> 
+		
+		
 
 </mapper>

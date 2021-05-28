@@ -180,8 +180,9 @@
          </exclusions>
         <!-- <scope>runtime</scope>  --> 
       </dependency>
+      
       <!-- tiles -->
-    <!--   <dependency> 
+      <dependency> 
       <groupId>org.apache.tiles</groupId>
          <artifactId>tiles-extras</artifactId>
          <version>${tiles-version}</version>
@@ -195,7 +196,7 @@
          <groupId>org.apache.tiles</groupId>
          <artifactId>tiles-jsp</artifactId>
          <version>${tiles-version}</version>
-      </dependency>  -->
+      </dependency>  
 
       <!-- @Inject -->
       <dependency>

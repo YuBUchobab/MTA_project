@@ -12,6 +12,8 @@ public interface freeDao {
 	public int freeboardInsert(freeBoardVO bvo);
 	public int freeboardDelete(int num);
 	public int freeboardUpdate(freeBoardVO bvo);
+	public void freeboardUpdateViews(int f_no);
+	public int freeRecomment(int num);
 		
 
 }

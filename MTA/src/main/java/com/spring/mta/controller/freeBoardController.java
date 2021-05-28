@@ -94,11 +94,11 @@ public class freeBoardController {
 	 * 글 상세보기 구현
 	 *********************************************************/
 	@RequestMapping(value="/freeboardDetail", method = RequestMethod.GET)
-
 	public String boardDetail(@ModelAttribute("data") freeBoardVO bvo,fcommentVO fco, Model model) {
 		log.info("freeboardDetail 호출 성공");
 		//log.info("bvo = " + bvo);
 		
+
 		freeBoardVO detail = freeboardService.freeboardDetail(bvo);
 		model.addAttribute("detail", detail);
 		
@@ -176,6 +176,35 @@ public class freeBoardController {
 			return "redirect:"+url;
 			//redirect하고나서 절대 뒤에 띄워쓰기 x
 		}
+		
+		
+		/*********************************************************
+		 * 글 추천하기
+		 *********************************************************/
+		@RequestMapping(value = "/freeRecomment", method = RequestMethod.POST)
+		public String freeRecomment(@ModelAttribute("data") freeBoardVO fvo, RedirectAttributes ras) {
+			log.info("freeRecomment 호출 성공");
+			log.info("f_no:" + fvo.getF_no());
+			
+			int result = 0;
+			String url = "";
+			result = freeboardService.freeRecomment(fvo.getF_no());
+			
+			ras.addFlashAttribute("data",fvo);
+			//addFlashAttribute() 는 리다이렉트 직전 플래시에 저장하는 메소드다. 리다이렉트 이후에는 소멸한다.
+			
+			if(result == 1) {
+				//아래 url은 수정 후 상세ㅔ 페이지로 이동
+				//url = "/board/boardDetail?b_num="+bvo.getB_num();
+				url = "/board/freeboardDetail?b_num="+fvo.getF_no();
+			}else {
+				url = "/board/freeboard";
+			}
+			
+			return "redirect:"+url;
+			//redirect하고나서 절대 뒤에 띄워쓰기 x
+		}
+		
 }
 	
 
