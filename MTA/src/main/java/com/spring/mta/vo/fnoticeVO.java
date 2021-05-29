@@ -4,9 +4,10 @@ import lombok.Data;
 
 @Data
 public class fnoticeVO {
-	private int fn_no=0;			// 자게_공지글 번호
-	private String fn_title="";		// 자게_공지글 제목
-	private String fn_text="";		// 자게_공지글 내용
-	private String fn_regdate=""; 	// 자게_공지글 등록시간
+	private int fn_no = 0;		//공지번호
+	private String fn_title =""; 	//공지 타이틀
+	private String fn_text = "";	//공지 내용
+	private String fn_regdate;		//공지 등록일
+	private String mg_id;			//매니저 아이디
 	
 }

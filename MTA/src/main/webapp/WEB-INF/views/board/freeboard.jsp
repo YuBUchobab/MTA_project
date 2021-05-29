@@ -27,6 +27,14 @@
 		       .required{
 		       		color : red;
 		       }
+		       #notice_title{
+		       		color : blue;
+		       		font-weight: bold;
+		       }
+		       
+		       #notice_line{
+		       		background-color: #b6cbe2;
+		       }
 		</style>
 		<script type = "text/javascript"  src = "/resources/include/js/jquery-1.12.4.min.js"></script>
 		<script type = "text/javascript"  src = "/resources/include/js/common.js"></script>
@@ -85,11 +93,20 @@
 				});
             	
             	
+            	
           		/* 글쓰기 버튼 클릭 시 처리 이벤트 */
           		$("#insertFormBtn").click(function() {
 					location.href = "/board/freeWriteForm";
 				});
             	
+          		
+          		
+          		/* 공지쓰기 버튼 클릭 시 처리 이벤트 */
+          		$("#insertNoticeFormBtn").click(function() {
+					location.href = "/notice/fnoticeWriteForm";
+				});
+            	
+          		
           		/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
           		$(".goDetail").click(function() {
 					var f_no = $(this).parents("tr").attr("data-num");
@@ -102,7 +119,22 @@
 					});
 					$("#detailForm").submit();
 				});
+          		
+          		/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
+          		$(".goNotice").click(function() {
+					var fn_no = $(this).parents("tr").attr("data-num");
+					$("#fn_no").val(fn_no);
+					console.log("공지글번호:" +fn_no);
+					//상세 페이지로 이동하기 위해 form 추가 (id : detailForm)
+					$("#detailNoticeForm").attr({
+						"method" : "get",
+						"action" : "/notice/fnoticeDetail"
+					});
+					$("#detailNoticeForm").submit();
+				});
 			});
+            
+           
             
          
             
@@ -124,6 +156,10 @@
        
        <form id="detailForm">
        		<input type="hidden" id="f_no" name="f_no">
+       </form>
+       
+       <form id="detailNoticeForm">
+       		<input type="hidden" id="fn_no" name="fn_no">
        </form>
        		   <div id="boardSearch" class="text-right">
 		         <form id="f_search" name="f_search" class="form-inline">
@@ -167,11 +203,34 @@
                   </tr>
                </thead>
                <tbody id="list" class="table-striped" >
-      				<!-- 데이터 출력 -->
+               <!-- 공지사항 출력 -->
+      				<c:choose>
+      					<c:when test="${not empty noticeList}">
+      						<c:forEach var="notice" items="${noticeList}" varStatus="status">
+      							<tr class="text-center" id="notice_line" data-num="${notice.fn_no}">
+      								<td>${notice.fn_no}</td>
+      								<td class="goNotice text-center" id="notice_title">${notice.fn_title}</td>
+      								<td class="text-left">${notice.fn_regdate}</td>
+      								<td class="mg_id">manager</td>
+      								<!--추천수 & 조회수  -->
+      								<td></td>
+      								<td></td>
+      								<td class="text-center">
+									</td>
+      							</tr>
+      						</c:forEach>
+      					</c:when>
+      					<c:otherwise>
+      						<tr>
+      							<td colspan="4" class="tac text-center">등록된 공지사항이 존재하지 않습니다.</td>
+      						</tr>
+      					</c:otherwise>
+      				</c:choose>
+      				<!-- 게시판 글 출력 -->
       				<c:choose>
       					<c:when test="${not empty boardList}">
       						<c:forEach var="board" items="${boardList}" varStatus="status">
-      							<tr class="text-center" data-num="${board.f_no}">
+      							<tr class="text-center"  data-num="${board.f_no}">
       								<td>${board.f_no}</td>
       								<td class="goDetail text-center">${board.f_title}</td>
       								<td class="text-left">${board.f_regdate}</td>
@@ -199,6 +258,7 @@
             	<%-- ===============글쓰기 버튼 출력 시작 ===============--%>
             	<div class="contentBtn text-right">
                			<input type="button" value="글쓰기" id="insertFormBtn" class="btn btn-primary btn-sm">
+               			<input type="button" value="공지사항글쓰기" id="insertNoticeFormBtn" class="btn btn-primary btn-sm">
             	</div>
             
            </div>

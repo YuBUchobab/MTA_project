@@ -27,7 +27,7 @@
                      <h3 id="music_font">News Board</h3>
                     
                      <h3 id="music_font" class="community">Community</h3>
-                     <h3 id="music_font">About</h3>
+                     <h3 id="music_font" onclick="location.href='/sboard/serviceCenter'">About</h3>
                   </div>
              </div>
              <div id=mainhomepagecategori>
@@ -46,9 +46,9 @@
             <span class="block">  |  </span>
             <span  id=mypagebutton class="topmainpagebutton">MyPage</span>
             <span class="block">  |  </span>
-            <span class="topmainpagebutton">Customer Service Center</span>
+            <span class="topmainpagebutton" onclick="location.href='/sboard/serviceCenter'">Customer Service Center</span>
             <span class="block">  |  </span>
-            <span class="topmainpagebutton">Notice</span>   
+            <span class="topmainpagebutton" onclick="location.href='/board/freeboard'">Notice</span>   
             <span class="block">  |  </span>
          </div>
       </div>
@@ -71,7 +71,7 @@
                  
               </div>
              <br><br>          
-              <h1 id="mypagefont">Sign Up</h1>
+              <h1 id="mypagefont">Sign in</h1>
               <br><br><hr><br>
               <div id="idpwddiv">
               <form name="loginform" id="loginform">
@@ -84,8 +84,9 @@
               </form>
               <br />
               <br>
-              <a   class="sign_upbutton" id="new_login">Membership</a>
-              <a   class="sign_upbutton" id="id.pwd">ID/Password Search</a>
+              <a  href="/user/Accept" class="sign_upbutton" id="new_login" >Sign up</a>
+              <a  href="/user/useridfind" class="sign_upbutton" id="id.pwd">ID Search</a>/
+              <a  href="/user/userpwfind" class="sign_upbutton" id="id.pwd">Password Search</a>
               </div>
            </div>
            </label>
@@ -103,8 +104,6 @@
              <input type="button" id="mypage_purchase" class="button" value="Purchase List">
              <br><br>
              <input type="button" id="mypage_shopping" class="button" value="Shopping Basket">
-             <br><br>
-             <input type="button" id="mypage_about" class="button" value="Customer Service Center">
              </form> 
               </div>
               

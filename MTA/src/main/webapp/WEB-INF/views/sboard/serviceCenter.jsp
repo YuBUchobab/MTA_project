@@ -47,9 +47,9 @@
             		$("#keyword").val("<c:out value='${data.keyword}' />");
             		$("#search").val("<c:out value='${data.search}' />");
             		
-            		if($("#search").val()!='f_text'){
+            		if($("#search").val()!='scb_text'){
             			//:contains()는 특정 텍스트를 포함한 요ㅅ반환
-            			if($("#search").val()=='f_title') value = "#list tr td.goDetail";
+            			if($("#search").val()=='scb_title') value = "#list tr td.goDetail";
             			else if($("#search").val()=='user_id') value="#list tr td.user_id";
             		
             			console.log($(value+":contains('"+word+"')").html());
@@ -71,7 +71,7 @@
 					}
 					$("#f_search").attr({
 						"method" : "GET",
-						"action" : "/board/freeboard"
+						"action" : "/sboard/serviceCenter"
 						
 					});
 					$("#f_search").submit();
@@ -87,18 +87,18 @@
             	
           		/* 글쓰기 버튼 클릭 시 처리 이벤트 */
           		$("#insertFormBtn").click(function() {
-					location.href = "/board/freeWriteForm";
+					location.href = "/sboard/serviceWriteForm";
 				});
             	
           		/* 제목 클릭시 상세 페이지 이동을 위한 처리 이벤트 */
           		$(".goDetail").click(function() {
-					var f_no = $(this).parents("tr").attr("data-num");
-					$("#f_no").val(f_no);
-					console.log("글번호:" +f_no);
+					var scb_no = $(this).parents("tr").attr("data-num");
+					$("#scb_no").val(scb_no);
+					console.log("글번호:" +scb_no);
 					//상세 페이지로 이동하기 위해 form 추가 (id : detailForm)
 					$("#detailForm").attr({
 						"method" : "get",
-						"action" : "/board/freeboardDetail"
+						"action" : "/sboard/serviceboardDetail"
 					});
 					$("#detailForm").submit();
 				});
@@ -113,7 +113,7 @@
 				}
 				$("#f_search").attr({
 					"method" : "get",
-					"action" :"/board/freeboard"
+					"action" :"/sboard/serviceCenter"
 				});
 				$("#f_search").submit();	
 			}
@@ -121,9 +121,9 @@
     </head>
    <body>
       <div class = "container">
-       
+       <h3 class="text-center">[Service Center]</h3>
        <form id="detailForm">
-       		<input type="hidden" id="f_no" name="f_no">
+       		<input type="hidden" id="scb_no" name="scb_no">
        </form>
        		   <div id="boardSearch" class="text-right">
 		         <form id="f_search" name="f_search" class="form-inline">
@@ -133,8 +133,8 @@
 			         		<label>검색조건</label>
 							<select id="search" name="search" class="form-control">
 							    <option value="all">전체</option>
-							    <option value="f_title">제목</option>
-							    <option value="f_text">내용</option>
+							    <option value="scb_title">제목</option>
+							    <option value="scb_text">내용</option>
 							    <option value="user_id">작성자</option>
 							</select>
 							<input type="text" name="keyword" id="keyword" class="form-control" placeholder="검색어를 입력하세요" />
@@ -148,43 +148,33 @@
             <table summary = "게시판 리스트" class = "table">
                <colgroup>
                   <col width ="10%" />
-                  <col width ="42%" />
+                  <col width ="52%" />
                   <col width ="15%" />
                   <col width ="13%" />
-                  <col width ="7%" />
-                  <col width ="7%" />
-                  <col width ="6%" />
+                  <col width ="10%" /> 
                </colgroup>
                <thead>
                   <tr>
-                     <th data-value="f_no" class="order text-center">글번호</th>
+                     <th data-value="scb_no" class="order text-center">글번호</th>
                      <th class="text-center">글제목</th>
-                     <th data-value="f_regdate" class="order">작성일</th>
+                     <th data-value="scb_regdate" class="order">작성일</th>
                      <th class="text-center">작성자</th>
-                     <th data-value="f_recoment" class="order text-center">추천수</th>
-      				 <th data-value="f_views" class="order text-center">조회수</th>
-      				 <th class="text-center">이미지</th>
+                     <th data-value="scb_replyCnt" class="order text-center">답변수</th>
+      				
                   </tr>
                </thead>
                <tbody id="list" class="table-striped" >
       				<!-- 데이터 출력 -->
       				<c:choose>
-      					<c:when test="${not empty boardList}">
-      						<c:forEach var="board" items="${boardList}" varStatus="status">
-      							<tr class="text-center" data-num="${board.f_no}">
-      								<td>${board.f_no}</td>
-      								<td class="goDetail text-center">${board.f_title}</td>
-      								<td class="text-left">${board.f_regdate}</td>
+      					<c:when test="${not empty serviceList}">
+      						<c:forEach var="board" items="${serviceList}" varStatus="status">
+      							<tr class="text-center" data-num="${board.scb_no}">
+      								<td>${board.scb_no}</td>
+      								<td class="goDetail text-center">${board.scb_title}</td>
+      								<td class="text-left">${board.scb_regdate}</td>
       								<td class="user_id">mta</td>
-      								<!--추천수 & 조회수  -->
-      								<td>${board.f_recommentCnt}</td>
-      								<td>${board.f_viewsCnt}</td>
-      								<!-- 파일 삽입여부  -->
-      								<td class="text-center">
-		                              	<c:if test="${not empty board.f_file }">
-		                              	 		yes
-		                              	</c:if>
-									</td>
+      								<td>${board.scb_replyCnt}</td>
+      					
       							</tr>
       						</c:forEach>
       					</c:when>
@@ -205,27 +195,6 @@
            <%--==================리스트 종료====================  --%>
            
            <%--==================페이징 출력 시작====================  --%>
-           <%-- <div class="text-center">
-           		<ul class="pagination">
-           			<c:if test="${pageMaker.prev}">
-           				<li class="paginate_button previous">
-           					<a href="${pageMaker.startPage -1}">Previous</a>
-           				</li>
-           			</c:if>
-           			<c:forEach var="num" begin="${pageMaker.startPage}"
-           									end="${pageMaker.endPage}">
-           				<li class="paginate_button ${pageMaker.cvo.pageNum == num ? 'active':''}" >
-           					<a href="${num}">${num}</a>
-           				</li>
-           			</c:forEach>
-           			<c:if test="${pageMaker.next}">
-           					<li class="paginate_button next">
-           						<a href="${pageMaker.endPage + 1}">Next</a>
-           					</li>
-           			</c:if>
-           		</ul>
-           </div> --%>
-           
            <tag:simple  pageNum= "${pageMaker.cvo.pageNum}" amount="${pageMaker.cvo.amount}"
            				startPage="${pageMaker.startPage}" endPage="${pageMaker.endPage}"
            				prev="${pageMaker.prev}" next="${pageMaker.next}" />

@@ -41,13 +41,12 @@
              /* 저장 버튼 클릭 시 처리 이벤트 */
              $("#boardUpdate").click(function(){
                 // 입력값 체크
-                if (!chkData("#f_title", "제목을")) return;
-                else if (!chkData("#f_text","작성할 내용을")) return;
+                if (!chkData("#scb_title", "제목을")) return;
+                else if (!chkData("#scb_text","작성할 내용을")) return;
                 else {
                    $("#f_updateForm").attr({
                       "method":"post",
-                      "enctype":"multipart/form-data",
-                      "action":"/board/freeboardUpdate"
+                      "action":"/sboard/serviceboardUpdate"
                    });
                    $("#f_updateForm").submit();
                 }
@@ -62,7 +61,7 @@
              
              /* 목록 버튼 클릭 시 처리 이벤트 */
              $("#boardListBtn").click(function(){
-                location.href = "/board/freeboard";
+                location.href = "/sboard/serviceCenter";
              });
           });
         
@@ -75,7 +74,7 @@
    	  <h3>글수정</h3>
       <div class = "contentTB">
          <form id = "f_updateForm" name = "f_updateForm" >
-         <input type = "hidden" name = "f_no" id = "f_no" value = "${updateData.f_no}">
+         <input type = "hidden" name = "scb_no" id = "scb_no" value = "${updateData.scb_no}">
             <table class="table table-condensed">
                <colgroup>
                   <col width="17%" />
@@ -83,38 +82,26 @@
                </colgroup>
                 <tr>
                   <td class = "text-left">글 번 호</td>
-                  <td>${updateData.f_no}
+                  <td>${updateData.scb_no}
                   <td class = "ac">작 성 일</td>
-                  <td>${updateData.f_regdate}</td>
+                  <td>${updateData.scb_regdate}</td>
                </tr>
                <tr>
                   <td class = "ac">작 성 자</td>
                   <td colspan = "3">
-                  <input type = "text" value="프로토타입" ></td>
+                  <input type = "text" value="mta" ></td>
                </tr>   
                <tr>
                   <td class = "ac">글 제 목</td>
                   <td colspan = "3" class="text-left">
-                  <input type = "text" id = "f_title" name = "f_title" value = "${updateData.f_title}"><td>
+                  <input type = "text" id = "scb_title" name = "scb_title" value = "${updateData.scb_title}"><td>
                </tr>
                <tr>
                   <td class = "ac">글 내 용</td>
                   <td colspan = "3" class="text-left">
-                  <textarea name = "f_text" id = "f_text" rows = "10" cols = "70" >${updateData.f_text}</textarea></td>
+                  <textarea name = "f_text" id = "f_text" rows = "10" cols = "70" >${updateData.scb_text}</textarea></td>
                </tr>
-                <tr>
-                  <td class = "ac">파일첨부</td>
-                  <td colspan = "3">
-                  <c:if test="${not empty detail.f_file }">
-		                       <img class="image_size" src="/uploadStorage/board/${updateData.f_file}"/></td>
-		          </c:if>
-               </tr>
-             	 <tr>
-                  <td class = "ac">파일첨부_변경</td>
-                  <td colspan = "3">
-                  
-                  <input type="file" class="form-control" id="file" name="file">(첨부된 파일변경)</td>
-               </tr>
+                
             </table>
          </form>
           <div class="contentBtn text-right">

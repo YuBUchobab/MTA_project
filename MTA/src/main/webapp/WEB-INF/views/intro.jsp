@@ -32,6 +32,8 @@
       <script src ="../js/html5shiv.js"></script>
       <![endif]-->
       <title>INTRO</title>
+      
+      
       <link rel="stylesheet" href="/resources/include/css/intro/leftslide.css"/>
       <link rel="stylesheet" href="/resources/include/css/intro/intro.css"/>
       <link rel="stylesheet" href="/resources/include/css/intro/intrologin.css"/>
@@ -169,7 +171,7 @@
    	 	<br>
    	 	<h3 id="" class="community">Community</h3>
    	 	<br>
-   	 	<h3>About</h3>
+   	 	<h3 onclick="location.href='/sboard/serviceCenter'">About</h3>
 
    	 </div>
    	</div>
@@ -201,8 +203,9 @@
   					<input type="button" id="login_button" name="login_button" class="button" value="Log In">
   				<br />
   				<br>
-  				<a href="#" class="new_login" id="new_login">회원가입</a>
-  				<a href="#" class="id.pwd" id="id.pwd">아이디/비밀번호 찾기</a>
+  				<a href='/user/Accept' class="new_login" id="new_login" >회원가입</a>
+  				<a href="/user/useridfind" class="id.pwd" id="id.pwd" >아이디찾기</a>/
+  				<a href="/user/userpwfind" class="id.pwd" id="id.pwd">비밀번호찾기</a>
   				</div>
   			</div>
   		</label>	
@@ -212,17 +215,16 @@
   				
   				</div>   
   				<br><br>
-  				<h1>마이페이지</h1>
+  				<h1 id="mypagefont">MyPage</h1>
  				<br><br><hr><br>
- 				<input type="button" id="mypage_board" class="button" value="회원정보">
+ 				<input type="button" id="mypage_board" class="button" style="width:470px;" value="Membership Information">
  				<br><br>
- 				<input type="button" id="mypage_sell" class="button" value="판매내역">
+ 				<input type="button" id="mypage_sell" class="button" style="width:470px;" value="Sales Inquiry">
  				<br><br>
- 				<input type="button" id="mypage_purchase" class="button" value="구매내역">
+ 				<input type="button" id="mypage_purchase" class="button" style="width:470px;" value="Purchase List">
  				<br><br>
- 				<input type="button" id="mypage_shopping" class="button" value="장바구니">
- 				<br><br>
- 				<input type="button" id="service_center" class="button" value="고객센터">
+ 				<input type="button" id="mypage_shopping" class="button" style="width:470px;" value="hopping Basket">
+
   				</div>
   			</div>		
   		<div class="sidebar1">

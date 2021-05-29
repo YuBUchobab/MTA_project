@@ -7,6 +7,9 @@
 		<typeAlias type="com.spring.mta.vo.UserVO" alias="user"/>
 		<typeAlias type="com.spring.mta.vo.MusicBoardVO" alias="mboard"/>
 		<typeAlias type="com.spring.mta.vo.serviceVO" alias="service"/>
+		<typeAlias type="com.spring.mta.vo.fnoticeVO" alias="fnotice"/>
+		<typeAlias type="com.spring.mta.vo.purchaseVO" alias="purchase"/>
+		<typeAlias type="com.spring.mta.vo.salesVO" alias="sales"/>
 	</typeAliases>
 	 
 	 

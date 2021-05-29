@@ -40,7 +40,7 @@ public class serviceBoardController {
 	 *********************************************************/
 	
 	@RequestMapping(value="/serviceCenter", method = RequestMethod.GET)
-	public String boardList(@ModelAttribute("data") serviceVO sbvo, Model model ) {
+	public String serviceCenterList(@ModelAttribute("data") serviceVO sbvo, Model model ) {
 		log.info("serviceBoard 호출 성공");
 		
 	
@@ -62,7 +62,7 @@ public class serviceBoardController {
 	 * 글쓰기 폼 출력하기
 	 *********************************************************/
 	@RequestMapping("/serviceWriteForm")
-	public String writeForm(@ModelAttribute("data") freeBoardVO bvo) {
+	public String writeForm(@ModelAttribute("data") serviceVO sbvo) {
 		log.info("serviceWrtieForm 호출 성공");
 		
 		return "sboard/serviceWriteForm";
@@ -104,11 +104,8 @@ public class serviceBoardController {
 		serviceVO detail = sService.serviceboardDetail(sbvo);
 		model.addAttribute("detail", detail);
 		
-		/*
-		List<fcommentVO> fcommentList =  fcommentservice.fcommentList(fco);
-		model.addAttribute("fcommentList",fcommentList);
-		*/
-		return "sboard/serviceboardDetail";
+		
+		return "sboard/serviceDetail";
 	}
 	
 	

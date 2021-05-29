@@ -14,8 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.mta.common.vo.PageDTO;
 import com.spring.mta.service.fcommentService;
+import com.spring.mta.service.fnoticeService;
 import com.spring.mta.service.freeBoardService;
 import com.spring.mta.vo.fcommentVO;
+import com.spring.mta.vo.fnoticeVO;
 import com.spring.mta.vo.freeBoardVO;
 
 import lombok.AllArgsConstructor;
@@ -31,6 +33,7 @@ public class freeBoardController {
 	
 	private freeBoardService freeboardService;
 	private fcommentService fcommentservice;
+	private fnoticeService noticeService;
 	
 	/*********************************************************
 	 * 글목록 구현하기(페이징 처리 목록 조회)
@@ -38,13 +41,17 @@ public class freeBoardController {
 	
 	@RequestMapping(value="/freeboard", method = RequestMethod.GET)
 	//GetMapping("/boardList")
-	public String boardList(@ModelAttribute("data") freeBoardVO fvo, Model model ) {
+	public String boardList(@ModelAttribute("data") freeBoardVO fvo, fnoticeVO nvo, Model model ) {
 		log.info("freeBoard 호출 성공");
 		
 	
 		// 전체 레코드 조회 
 		List<freeBoardVO> boardList = freeboardService.freeboardList(fvo);
 		model.addAttribute("boardList", boardList);
+		
+		// 공지사항 레코드 조회
+		List<fnoticeVO> noticeList = noticeService.noticeList(nvo);
+		model.addAttribute("noticeList", noticeList);
 		
 		// 전체 레코드수 구현
 		int total = freeboardService.boardListCnt(fvo);
