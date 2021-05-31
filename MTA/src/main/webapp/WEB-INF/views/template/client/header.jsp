@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 
 
@@ -42,9 +43,17 @@
          </div>
          <div id="rightcategori">   
             <span class="block">  |  </span>
-            <span  id=mypagelogin class="topmainpagebutton">Login</span>
-            <span class="block">  |  </span>
-            <span  id=mypagebutton class="topmainpagebutton">MyPage</span>
+            <c:choose>
+            	<c:when test="${not empty userInfo.user_id }">
+            	 	<span  id=mypagebutton class="topmainpagebutton">MyPage</span>
+            	</c:when>
+            	<c:otherwise>
+            		<span  id=mypagelogin class="topmainpagebutton">Login</span>
+            	</c:otherwise>
+            </c:choose>
+            
+        <!--     <span class="block">  |  </span> -->
+            
             <span class="block">  |  </span>
             <span class="topmainpagebutton" onclick="location.href='/sboard/serviceCenter'">Customer Service Center</span>
             <span class="block">  |  </span>
@@ -65,7 +74,7 @@
              
 
        <!-- 우측 슬라이드바  -->
-          <label class="inner" id="inner" onclick="click_page" >
+          <label class="inner" id="inner" >
           <div id="logindiv">
               <div id="main_page">
                  
@@ -76,11 +85,11 @@
               <div id="idpwddiv">
               <form name="loginform" id="loginform">
                  <p id="idpwd">ID</p>
-                 <input type="text" class="login" id="id_login">
+                 <input type="text" class="login" name="user_id" id="user_id">
                  <p id="idpwd">Passward</p>
-                 <input type="password" class="login"  id="psw_login">
+                 <input type="password" class="login" name="user_passwd" id="user_passwd">
               <br><br>
-              <input type="button" class="login_button" id="login_button" value="Log In">
+              <input type="button" class="login_button" id="login_button" name="login_button" value="Log In">
               </form>
               <br />
               <br>
@@ -104,6 +113,8 @@
              <input type="button" id="mypage_purchase" class="button" value="Purchase List">
              <br><br>
              <input type="button" id="mypage_shopping" class="button" value="Shopping Basket">
+             <br><br>
+ 			 <input type="button" id="mypage_logout" class="button" value="log Out">
              </form> 
               </div>
               

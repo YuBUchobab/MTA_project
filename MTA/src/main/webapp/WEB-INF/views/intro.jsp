@@ -60,6 +60,11 @@
 					location.href="/mboard/boardList"
 				});
 				
+				/* 로그 아웃 */
+				$("#mypage_logout").click(function() {
+					location.href="/user/logout";
+					alert("로그아웃 되었습니다.");
+				});
 			
 			 					
 							
@@ -224,6 +229,8 @@
  				<input type="button" id="mypage_purchase" class="button" style="width:470px;" value="Purchase List">
  				<br><br>
  				<input type="button" id="mypage_shopping" class="button" style="width:470px;" value="hopping Basket">
+ 				<br><br>
+ 				<input type="button" id="mypage_logout" class="button" style="width:470px;" value="log Out">
 
   				</div>
   			</div>		

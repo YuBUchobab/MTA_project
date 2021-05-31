@@ -53,7 +53,7 @@
             });
            
             
-            /* 삭젲 버튼 클릭 시 처리 이벤트 */
+            /* 삭제 버튼 클릭 시 처리 이벤트 */
             $("#boardDeleteBtn").click(function(){
             	if(confirm("정말 삭제하시겠습니까?")){
 					$("#f_data").attr("action","/board/freeboardDelete");
@@ -84,6 +84,7 @@
             
         	   /* 댓글삭제 버튼 클릭 시 처리 이벤트 */
                $("#fcdeleteBtn").click(function(){
+            	   
             	   console.log("댓글삭제클릭");
                	if(confirm("정말 삭제하시겠습니까?")){
    					$("#fc_form").attr("action","/fcomment/fcDelete");
@@ -130,7 +131,7 @@
 	   			</tr>
    				<tr>
    					<td class="col-md-3">작성자 </td>
-   					<td colspan="3" class="col-md-9 text-left">mta</td>
+   					<td colspan="3" class="col-md-9 text-left">${detail.user_id}</td>
    				</tr>
    				<tr>
    					<td class="col-md-3">글제목 </td>
@@ -150,10 +151,10 @@
    				</tr>
    				<tr>
    					<td class="col-md-3">파일첨부 </td>
-   					<td colspan="3" class="col-md-9 text-left">
    					<c:if test="${not empty detail.f_file }">
-		                     <img class="image_size" src="/uploadStorage/board/${detail.f_file}" /></td>
-		            </c:if>
+   					<td colspan="3" class="col-md-9 text-left">
+		          		 <img class="image_size" src="/uploadStorage/board/${detail.f_file}" /></td>
+		           </c:if> 
    				</tr>
    			</table>
    			<div>
@@ -170,6 +171,7 @@
          			</form> --%>
 			 		<form id="fcomment" name="fcomment">
 			 			 <input type = "hidden" name = "f_no" value = "${detail.f_no}" />
+			 			 <input type = "hidden" name = "user_id" value = "${userInfo.user_id}" />
 			 			<textarea rows="5" class="col-md-11" maxlength="2000" id="fc_text" name="fc_text"></textarea>
 			 		</form>
 			 		<button type="button" id="fc_insertBtn" class="btn btn-primary btn-sm" >댓글등록</button>
@@ -182,39 +184,28 @@
 		       
 		            <table summary = "댓글 리스트" class = "table">
 		               <colgroup>
-		               	  <col width ="5%" />
-		                  <col width ="5%" />
-		                  <col width ="10%" />
-		                  <col width ="10%" />
-		                  <col width ="70%" />
-		                 
+		               	  <col width ="100%" />
 		               </colgroup>
-		               <thead>
-		                  <tr>
-		                  	 <th data-value="fc_no" class="">댓글번호</th>
-		                     <th data-value="f_no" class="">글번호</th>
-		                     <th class="text-center">유저아이디</th>
-		                     <th class="text-center">댓글등록일</th>
-		                     <th class="text-center">댓글내용</th>
-		                  </tr>
-		               </thead>
+		             
 		               <tbody id="list" class="table-striped" >
 		      				<!-- 데이터 출력 -->
 		      				<c:choose>
 		      					<c:when test="${not empty fcommentList}">
 		      						<c:forEach var="comment" items="${fcommentList}" varStatus="status">
-		      							  <form id="fc_form" method="post">
+		      						  <form id="fc_form" method="post">
 									         	<input type = "hidden" name = "fc_no" value = "${comment.fc_no}">
+									         	<%-- <input type = "hidden" name = "fc_no" value = "${c.fc_no}"> --%>
 									      		<input type = "hidden" name = "f_no" value = "${comment.f_no}">
-									      	</form>
-		      							<tr class="text-center" data-num="${comment.fc_no}">
-		      								<td class="text-center">${comment.fc_no}</td>
-		      								<td class="text-center">${comment.f_no}</td>
-		      								<td class="text-center">유저아이디</td>
-		      								<td class="text-center">${comment.fc_regdate}</td>
-		      								<td class="text-center">${comment.fc_text }</td>
-		      								<td><button class="btn btn-primary btn-sm" type="button" id="fcdeleteBtn" name="fcdeleteBtn">삭제</button>
+									   </form>
+		      						<tr class="text-center" data-num="${comment.fc_no}">
+											<td class="text-left">
+		      								<%-- <td class="text-center">${comment.fc_no}</td>  --%>
+		      								 <%-- <td class="text-center">${comment.f_no}</td>  --%>
+		      								<span style="font-weight:bold;">${comment.user_id}  /  ${comment.fc_regdate}</span><br/>
+		      								<span class="col-md-11">${comment.fc_text }</span>
+		      								<button class="btn btn-primary btn-sm" type="button" id="fcdeleteBtn" name="fcdeleteBtn">삭제</button>
 		      								</td>
+		 
 		      							</tr>
 		      							
 		      						</c:forEach>

@@ -48,10 +48,10 @@
 		 <select id="freeboardList" parameterType="board" resultType="board">
 		 <![CDATA[
 		 	SELECT 
-		 	f_no, f_title, f_text, to_char(f_regdate, 'YYYY-MM-DD') as f_regdate, f_file , f_viewsCnt , f_recommentCnt
+		 	f_no, f_title, user_id, f_text, to_char(f_regdate, 'YYYY-MM-DD') as f_regdate, f_file , f_viewsCnt , f_recommentCnt
 		 	FROM ( 
 		 		SELECT /*+ INDEX_DESC(free_board free_board_pk)*/
-		 				rownum as rnum, f_no, f_title, f_text , f_regdate, f_file, f_viewsCnt ,f_recommentCnt
+		 				rownum as rnum, f_no, f_title, user_id, f_text , f_regdate, f_file, f_viewsCnt ,f_recommentCnt
 		 				from free_board
 		 	WHERE ]]>
 		 	<trim prefix="(" suffix=") AND " prefixOverrides="AND">
@@ -74,8 +74,8 @@
 		
 		<!-- 게시판 리스트 칼럼 추가  -->
 		<insert id="freeboardInsert" parameterType="board">
-			Insert into free_board (f_no, f_title, f_text, f_file)  
-			values (free_board_seq.nextval, #{f_title} , #{f_text} , #{f_file})
+			Insert into free_board (f_no, f_title, user_id, f_text, f_file)  
+			values (free_board_seq.nextval, #{f_title} , #{user_id} , #{f_text} , #{f_file})
 		</insert> 
 		
 		<!-- 게시판 리스트 칼럼 추가 -->
@@ -102,7 +102,7 @@
 		<select id="freeboardDetail" parameterType="board" resultType="board">
 			/* Board - freeboardDetail */
 			SELECT
-					f_no, f_title, f_text, to_char(f_regdate, 'YYYY-MM-DD HH:MM:SS') as f_regdate, f_file , f_viewsCnt, f_recommentCnt
+					f_no, f_title, user_id, f_text, to_char(f_regdate, 'YYYY-MM-DD HH:MM:SS') as f_regdate, f_file , f_viewsCnt, f_recommentCnt
 			FROM free_board
 			WHERE f_no = #{f_no}
 		</select> 

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.spring.mta.common.vo.PageDTO;
 import com.spring.mta.service.PurchaseService;
 import com.spring.mta.service.SalesService;
 import com.spring.mta.vo.salesVO;
@@ -29,6 +30,11 @@ public class salesController {
 		
 		List<salesVO> salesboard = salesService.salesboard(svo);
 		model.addAttribute("salesboard", salesboard);
+		
+		// 전체 레코드수 구현
+		int total = salesService.boardListCnt(svo);
+		//페이징 처리
+		model.addAttribute("pageMaker" , new PageDTO(svo, total));
 		
 		
 		return "order/sales_list"; 

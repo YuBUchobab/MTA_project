@@ -42,7 +42,7 @@
 					//입력값 체크 
 					if(!chkData("#m_title","이름을"))return ;
 					else if(!chkData("#m_name","제목을")) return;
-					else if(!chkData("#coverImg","커버이미지를 ")) return ; //to-do  파일 등록에 대한 유효성 체크 구문을 다르게 주어, 메서드 생성 
+					else if(!chkData("#cover_file","커버이미지를 ")) return ; //to-do  파일 등록에 대한 유효성 체크 구문을 다르게 주어, 메서드 생성 
 					else if(!chkData("#m_bpm","Bpm 정보를")) return ;
 					else if(!chkData("#m_explan","곡 설명을")) return ;
 					else if(!chkData("#file","음악파일을")) return ;
@@ -81,7 +81,7 @@
 			<!-- 	<h2 class ="text-center">글작성</h2> -->
 
 		<form id="f_writeForm">
-			<input type ="hidden" id ="user_id" name = "user_id" value ="test"/> <!-- session 값으로 추후 로그인 정보 전달 요망 --> 
+			<input type ="hidden" id ="user_id" name = "user_id" value ="${userInfo.user_id}"/> <!-- session 값으로 추후 로그인 정보 전달 요망 --> 
 			<table class="table table-light">
 				<colgroup>
 					<col width="17%" />
@@ -104,7 +104,7 @@
 					<tr>
 						<th><label for="m_coverimage" class="text-left">Cover
 								Image Attachment : </label></th>
-						<td><input type="file" name="coverImg" id="coverImg"></td>
+						<td><input type="file" name="cover_file" id="cover_file"></td>
 						<!-- 업로드 할 파일 미리보기가 출력될 영역 설정 예정  -->
 						<td hidden="true"><span class = "preview"></span></td>
 					</tr>

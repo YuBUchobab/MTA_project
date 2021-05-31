@@ -76,7 +76,7 @@ public class UserController {
 	/*********************************************************
 	 * 로그아웃 구현하기
 	 *********************************************************/
-	/*
+	
 	 @RequestMapping("/logout")
 	    public String logout(HttpSession session) {
 	        session.invalidate();
@@ -85,7 +85,7 @@ public class UserController {
 	     return "/intro";
 	}
 
-*/
+
 	
 	
 	/********************************************************

@@ -96,7 +96,13 @@
             	
           		/* 글쓰기 버튼 클릭 시 처리 이벤트 */
           		$("#insertFormBtn").click(function() {
-					location.href = "/board/freeWriteForm";
+          			console.log("${userInfo.user_id}");
+          			if("${userInfo}" == ''){
+          				alert("로그인후 이용가능합니다.");
+          			}else{
+          				location.href = "/board/freeWriteForm";
+          			}
+					
 				});
             	
           		
@@ -234,7 +240,7 @@
       								<td>${board.f_no}</td>
       								<td class="goDetail text-center">${board.f_title}</td>
       								<td class="text-left">${board.f_regdate}</td>
-      								<td class="user_id">mta</td>
+      								<td class="user_id">${board.user_id}</td>
       								<!--추천수 & 조회수  -->
       								<td>${board.f_recommentCnt}</td>
       								<td>${board.f_viewsCnt}</td>

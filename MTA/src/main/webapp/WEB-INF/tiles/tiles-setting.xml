@@ -48,9 +48,13 @@
      </definition> 
      
      <definition name="notice/*" extends="content">
-      <put-attribute name="title" value="MTA기타문서" />
+      <put-attribute name="title" value="MTA공지사항" />
        <put-attribute name="body" value="/WEB-INF/views/notice/{1}.jsp" />
      </definition> 
      
 
+	<definition name="order/*" extends="content">
+      <put-attribute name="title" value="MTA결제관련페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/order/{1}.jsp" />
+     </definition> 
 </tiles-definitions>

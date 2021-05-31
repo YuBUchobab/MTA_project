@@ -3,6 +3,8 @@ package com.spring.mta.service;
 import java.util.List;
 
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import com.spring.common.file.FileUploadUtil;
 import com.spring.mta.dao.MusicBoardDao;
 import com.spring.mta.dao.ReplyDao;
 import com.spring.mta.vo.MusicBoardVO;
+import com.spring.mta.vo.UserVO;
 
 import lombok.Setter;
 
@@ -87,7 +90,28 @@ public class MusicBoardServiceImpl implements MusicBoardService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	 
+
+
+	@Override
+	public int pwdConfirm(UserVO uvo) {
+		// TODO Auto-generated method stub
+		int result = 0;
+		result = musicBoardDao.pwdConfirm(uvo);
+		
+		return result;
+	}
+
+
+	@Override
+	public int musicboardDelete(int m_no) {
+		
+			int result = 0;
+			result = musicBoardDao.musicboardDelete(m_no);
+			return result;
+		}
+		 
+
+	
 
 	
 	

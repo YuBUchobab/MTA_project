@@ -10,6 +10,7 @@
 		<typeAlias type="com.spring.mta.vo.fnoticeVO" alias="fnotice"/>
 		<typeAlias type="com.spring.mta.vo.purchaseVO" alias="purchase"/>
 		<typeAlias type="com.spring.mta.vo.salesVO" alias="sales"/>
+		<typeAlias type="com.spring.mta.vo.CartVO" alias="cart"/>
 	</typeAliases>
 	 
 	 

@@ -4,12 +4,14 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.spring.mta.dao.SalesDao;
 import com.spring.mta.vo.salesVO;
 
 import lombok.Setter;
 
+@Service
 public class SalesServiceImpl implements SalesService{
 	
 	@Setter(onMethod_ =@Autowired )

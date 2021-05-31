@@ -24,8 +24,8 @@
 <!--viewport : 화면에 보이는 영역을 제어하는 기술. width는 device-width로 설정(브라우저 너비를 장치 너비에 맞추어 표시). initial-scale는 초기비율(보이는 영역과 웹 페이지를 맞춤). user-scalable는 사용자가 화면축소를 하지 못하도록 설정.-->
 
 <!-- 모바일 웹 페이지 설정 -->
-<link rel="shortcut icon" href="/resources/images/icon.png" />
-<link rel="apple-touch-icon" href="/resources/images/icon.png" />
+<link rel="shortcut icon" href="/resources/image/icon.png" />
+<link rel="apple-touch-icon" href="/resources/image/icon.png" />
 <!-- 모바일 웹 페이지 설정 끝 -->
 <link rel="stylesheet"
 	href="/resources/include/dist/css/bootstrap.min.css">
@@ -124,55 +124,49 @@
 		$("#boardListBtn").click(function() {
 			location.href = "/mboard/boardList";
 		});
-		/* 제목 클릭 시 상세 페이지 이동을 위한 이벤트  
-		$(".goDetail").click(function() {
-			var m_no = $(this).parents("tr").attr("data-num");
-			console.log(m_no);
-			$("#m_no").val(m_no);
-			$("#detailForm").attr({
-				"method" : "get",
-				"action" : "/board/boardDetail"
-			});
-			$("#detailForm").submit();
-		});*/
-		/* 제목 클릭 시 상세 페이지 이동을 위한 이벤트  
-		$(".goDetail").click(function() {
-			var m_no = $(this).parents("tr").attr("data-num");
-			console.log(m_no);
-			$("#m_no").val(m_no);
-			$("#detailForm").attr({
-				"method" : "get",
-				"action" : "/board/boardDetail"
-			});
-			$("#detailForm").submit();
-		});*/
+	
 		$("#checkOutBtn").click(function() {
 			$("#f_data").attr({
 				"method" : "get",
-				"action" : "/mboard/checkOut"
+				"action" : "/order/checkOut"
 			});
 			$("#f_data").submit();
 		});
 		//장바구니 버튼 이벤트 
 		$("#addCartBtn").click(function() {
-			var result = confirm('장바구니 담기 성공 ! 장바구니로 이동하시겠습니까?');
-			if (result) {
-				$("#f_data").attr({
-					"method" : "post",
-					"action" : "/mboard/addCart"
-				});
-				$("#f_data").submit();
-			} else {
-				//리스트로 돌아갈까?
+			if (confirm("장바구니에 담으시겠습니까?")) {
+				var m_no = $("#m_no").val();
+
+				$.ajax({
+							url : "/order/addCart",
+							type : "get",
+							data : {m_no : m_no},
+							success : function(result) {
+								if (result == 1) {
+								if(confirm("장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?")){
+									location.href = "/order/cartList";
+								}
+										
+								} else {
+									alert("장바구니에 이미 추가되어있는 상품입니다.");
+								}
+							}
+						}).fail(function() {
+							alert("시스템오류");
+						});
+
 			}
+
+
 		});
 	});
+		
 	function boardPwdConfirm() {
-		if (!chkData("#b_pwd", "비밀번호를"))
-			return;
+		if(!chkData("#user_passwd", "비밀번호를"))return;
 		else {
+		
 			$.ajax({
-				url : "/board/pwdConfirm", //전송 rul
+				url : "/mboard/pwdConfirm.json", //전송 url
 				type : "post",
 				data : $("#f_pwd").serialize(),
 				dataType : "text",
@@ -180,21 +174,22 @@
 					alert("시스템 오류, 관리자에게 문의 하세요.");
 				},
 				success : function(resultData) {
+					console.log(resultData);
 					var goUrl = "";
-					if (resultData == "실패") {
+					if (resultData == 0) {
 						console.log(resultData);
 						$("#msg").text("비밀번호를 확인해주세요.");
-						$("#b_pwd").select();
-					} else if (resultData == "성공") {
+						$("#user_passwd").select();
+					} else if (resultData == 1) {
 						$("#msg").text("");
 						console.log(resultData);
 						if (buttonCheck == 1) { //수정
-							goUrl = "/board/updateForm";
+							goUrl = "/mboard/updateForm";
 							$("#f_data").attr("action", goUrl);
 							$("#f_data").submit();
 						} else if (buttonCheck == 2) { //삭제
 							if (confirm("정말 삭제하시겠습니까?")) {
-								goUrl = "/board/boardDelete";
+								goUrl = "/mboard/boardDelete";
 								$("#f_data").attr("action", goUrl);
 								$("#f_data").submit();
 							}
@@ -204,6 +199,7 @@
 			});
 		}
 	}
+		
 </script>
 </head>
 <body>
@@ -212,16 +208,17 @@
 	<div class="container">
 	<form name= "f_data" id = "f_data">
 				<input type ="hidden" name = "m_no" value ="${detail.m_no}"/>
-				<input type = "hidden" name = "user_id" id = "user_id" value = "test"/>
+				
 			</form>		
 	<form name = "file" id = "file">
 		<input type ="hidden" name = "m_file" id = "m_file" value ="/uploadStorage/audioFile/${detail.m_file}"/>	
 	</form>
 		<div id="pwdChk" class="authArea  col-md-9 text-left">
 			<form name="f_pwd" id="f_pwd" class="form-inline">
-				<input type="hidden" name="b_num" id="b_num" value="${detail.m_no}">
-				<label for="b_pwd" >비밀번호 : </label> <input
-					type="password" name="b_pwd" id="b_pwd" class="form-control" />
+				<input type="hidden" name="m_no" id="m_no" value="${detail.m_no}">
+				<input type="hidden" name="user_id" id="user_id" value="${detail.user_id}"> 
+				<label for="user_passwd" >비밀번호 : </label> 
+				<input type="password" name="user_passwd" id="user_passwd" class="form-control"/>
 
 				<button type="button" id="pwdBut" class="btn btn-default btn-sm">확인</button>
 				<button type="button" id="pwdButCancel"
@@ -274,7 +271,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="col-md-3">작성자</td>
+						<td class="col-md-3">음악이름</td>
 						<td colspan="3" class="col-md-9 text-left">${detail.m_name}</td>
 					</tr>
 

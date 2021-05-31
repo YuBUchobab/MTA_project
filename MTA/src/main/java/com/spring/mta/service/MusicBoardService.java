@@ -3,6 +3,7 @@ package com.spring.mta.service;
 import java.util.List;
 
 import com.spring.mta.vo.MusicBoardVO;
+import com.spring.mta.vo.UserVO;
 
 public interface MusicBoardService {
 
@@ -17,6 +18,10 @@ public interface MusicBoardService {
 	public int recommend(MusicBoardVO mvo);
 
 	public int replyCnt(int m_no);
+
+	public int pwdConfirm(UserVO uvo);
+
+	public int musicboardDelete(int m_no);
 
 	
 

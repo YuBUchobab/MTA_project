@@ -13,7 +13,7 @@
 
 			SELECT
 			
-			m_no, m_title, m_name, m_coverimage,m_file, m_regdate, M_RECOMMENTCNT, m_views, user_id, m_price, m_isfree, m_genre
+			m_no, m_title, m_name, m_coverimage,m_file, m_regdate, m_recommentCnt, m_views, user_id, m_price, m_isfree, m_genre
 		      	 FROM  music_board		
 		      	
 			
@@ -32,7 +32,10 @@
 			</if>
 		</sql>
 		
-		
+		<!-- 글삭제  -->
+		<delete id="musicboardDelete" parameterType="int">
+			delete from music_board where m_no = #{m_no}
+		</delete>
 		
 		<insert id="musicBoardInsert" parameterType="mboard">
 			INSERT INTO music_board (
@@ -48,7 +51,7 @@
 		    m_isfree,
 		    m_genre
 		) VALUES (
-		music_board_sequence.nextval, #{m_title}, #{m_name}, #{m_coverimage}, #{m_bpm}, #{m_explan}, #{m_file}, #{user_id}, #{m_price}, #{m_isfree}, #{m_genre}
+		music_board_seq.nextval, #{m_title}, #{m_name}, #{m_coverimage}, #{m_bpm}, #{m_explan}, #{m_file}, #{user_id}, #{m_price}, #{m_isfree}, #{m_genre}
 		)
 		</insert>
 		
@@ -57,7 +60,7 @@
 			SELECT
 		
 			m_no, m_title, m_name, m_coverimage, m_bpm, m_explan, m_file,
-			m_regdate, M_RECOMMENTCNT, m_views, user_id, m_price, m_isfree, m_genre
+			m_regdate, m_recommentCnt m_views, user_id, m_price, m_isfree, m_genre
 			
 			FROM music_board
 			
@@ -69,8 +72,19 @@
 		
 		<update id="recommend" parameterType="mboard" >
 		update music_board
-		set M_RECOMMENTCNT = M_RECOMMENTCNT+1 
+		set m_recommentCnt = m_recommentCnt+1 
 		where m_no = #{m_no}
 		
 		</update>
+		
+		
+		<!-- 해당 번호의 비밀번호 확인  -->
+		<select id="pwdConfirm" parameterType="user" resultType="int">
+			/* mBoard - pwdConfirm */
+			SELECT NVL((
+							SELECT 1 FROM user_info
+							WHERE user_id = #{user_id} AND user_passwd = #{user_passwd}
+						), 0) as state
+			FROM dual
+		</select>
 </mapper>

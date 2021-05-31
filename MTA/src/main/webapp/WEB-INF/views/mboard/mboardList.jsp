@@ -303,9 +303,9 @@ audio::-webkit-media-controls-fullscreen-button
 									<td><img src="/uploadStorage/coverImg/${board.m_coverimage}" /></td>
 									<td class="goDetail text-left">${board.m_title}</td>
 									<td class="text-center">₩ ${board.m_price}</td>
-									<td class="text-center">${board.m_name}</td>
+									<td class="text-center">${board.user_id}</td>
 									<td class=""><button type="button"
-											class="btn-group btn-group-xs" data-num="${board.m_no}">${board.m_recommentcnt}</button></td>
+											class="btn-group btn-group-xs" data-num="${board.m_no}">${board.m_recommentCnt}</button></td>
 									<td><audio controls controlsList="nodownload"
 											src="/uploadStorage/audioFile/${board.m_file}"></audio></td>
 									<td><button type="button" class="btn btn-default" id ="fileDownBtn"

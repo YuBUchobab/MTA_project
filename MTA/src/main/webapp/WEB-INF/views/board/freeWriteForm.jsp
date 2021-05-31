@@ -79,16 +79,17 @@
                   <col width="83%" />
                </colgroup>
                
-               <tr>
-                  <td class = "ac">작 성 자</td>
-                  <td colspan = "3">
-                  <input type = "text" value="프로토타입" ></td>
-               </tr>   
+           
                <tr>
                   <td class = "ac">글 제 목</td>
                   <td colspan = "3">
                   <input type = "text" id = "f_title" name = "f_title"  /></td>
                </tr>
+                <tr>
+                  <td class = "ac">작 성 자</td>
+                  <td colspan = "3">
+                  <input type = "text" id = "user_id" name = "user_id" value="${userInfo.user_id }"></td>
+               </tr>   
                <tr>
                   <td class = "ac">글 내 용</td>
                   <td colspan = "3">

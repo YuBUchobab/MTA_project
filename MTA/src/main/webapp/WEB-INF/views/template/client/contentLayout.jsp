@@ -38,6 +38,30 @@
       var clicks = 0;
 		$(function() {
 			
+			/* 로그인 버트 */
+			$("#login_button").click(function() {
+				$("#loginform").attr({
+					"method" : "post",
+					"action" : "/user/login"
+				});
+				
+				$("#loginform").submit();
+								
+				
+			});
+			
+			// 마이페이지로 이동
+			 $("#mypage_board").click(function() {
+					
+				 location.href = "/user/userDetailForm";
+			});
+			
+			/* 로그 아웃 */
+			$("#mypage_logout").click(function() {
+				location.href="/user/logout";
+				alert("로그아웃 되었습니다.");
+			});
+			
 			/* 음악 게시판으로 이동(Ballad)*/
 			$(".music_genre").click(function() {
 				location.href="/mboard/boardList"
@@ -69,11 +93,7 @@
 					  $(".inner").removeClass("open");
 				  });
 				  
-				
-				 /* 마이페이지 버튼 */
-				  $("#login_button").click(function(){
-		    		  $("#mypage").addClass("open");
-		    	  });
+			
 				  
 				  /* 마이페이지 버튼 */
 		    	  $("#my_page").click(function(){
@@ -82,16 +102,7 @@
 				  $("#mypagebutton").click(function(){
 					  $("#mypage").addClass("open");
 				  });
-				  //마이페이지 이동
-				  $("#mypage_board").click(function(){
-		    		  console.log("클릭");
-		    			$("#mypageform").attr({
-		    				"method" : "post",
-		    				"action" : "/mainpage/mypage"
-		    			});
-		    	     	$("#mypageform").submit();
-		    	       
-		    	    });
+			
 				  
 				  $("#mtaintro").click(function(){
 					  location.href = "/mainpage/eventintro";
