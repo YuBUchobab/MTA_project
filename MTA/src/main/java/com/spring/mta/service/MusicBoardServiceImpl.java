@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -112,6 +113,19 @@ public class MusicBoardServiceImpl implements MusicBoardService {
 		 
 
 	
+	@Override
+	public int boardListCnt(MusicBoardVO mvo) {
+		
+		return musicBoardDao.boardListCnt(mvo);
+	}
+
+
+	@Override
+	public List<MusicBoardVO> musicRecentList(MusicBoardVO mvo) {
+		// TODO Auto-generated method stub
+		List<MusicBoardVO> list = musicBoardDao.musicRecentList(mvo);
+		return list;
+	}
 
 	
 	

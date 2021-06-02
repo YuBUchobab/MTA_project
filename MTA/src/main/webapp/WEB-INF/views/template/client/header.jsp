@@ -4,7 +4,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 
+<script>
+//장르별 이동
+$(".music_genre").click(function() {
+	$("#m_genre").val($(this).html());
+		
+	console.log($(this).html());
+	var sk = $(this).html();
+	$("#cat_form").attr({
+		"method" : "GET",
+		"action" : "/mboard/boardList"
 
+	});
+	$("#cat_form").submit();
+});
+</script>
         <!--좌측 슬라이드바  -->
            <input type="checkbox" id="menuicon">
            <label for="menuicon">
@@ -14,18 +28,20 @@
            </label>
               <div class="sidebar">
                   <div class="categori">
+                  <form id ="cat_form" ><input type ="hidden" name ="m_genre" id ="m_genre" />
+                  </form>
                      <h3 id="music_font" class="music_genre">Ballad</h3>
                     
-                     <h3 id="music_font" class="music_genre">Rock</h3>
+                     <h3 id="music_font" class="music_genre">Electronic</h3>
                   
-                     <h3 id="music_font" class="music_genre">R&B</h3>
+                     <h3 id="music_font" class="music_genre">RnB</h3>
                    
-                     <h3 id="music_font" class="music_genre">New Age</h3>
+                     <h3 id="music_font" class="music_genre">NewAge</h3>
                    
                      <h3 id="music_font" class="music_genre">Rap/Hiphop</h3>
                      <br><br><hr>
                      <br>
-                     <h3 id="music_font">News Board</h3>
+                     <h3 id="music_font" onclick="location.href='/nboard/listnews'">News Board</h3>
                     
                      <h3 id="music_font" class="community">Community</h3>
                      <h3 id="music_font" onclick="location.href='/sboard/serviceCenter'">About</h3>
@@ -112,7 +128,7 @@
              <br><br>
              <input type="button" id="mypage_purchase" class="button" value="Purchase List">
              <br><br>
-             <input type="button" id="mypage_shopping" class="button" value="Shopping Basket">
+             <input type="button" id="mypage_shopping" class="button" onclick="location.href='/order/cartList'" value="Shopping Basket">
              <br><br>
  			 <input type="button" id="mypage_logout" class="button" value="log Out">
              </form> 

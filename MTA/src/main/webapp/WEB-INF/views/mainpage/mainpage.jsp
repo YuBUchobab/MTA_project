@@ -32,9 +32,22 @@
       <link rel="stylesheet" type = "text/css" href="/resources/include/css/leftslide.css"/>
       <link rel="stylesheet" type = "text/css" href="/resources/include/css/mainpage/mainhome.css"/>
       <link rel="stylesheet" type = "text/css" href="/resources/include/css/mainpage/main_login.css"/>
+      <style type="text/css">
+      <style>
+  table {
+    width: 100%;
+    border: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #444444;
+    
+  }
+</style>
+      </style>
       <title>MTA에 오신걸 환영합니다.</title>
-      <script type="text/javascript" src="/resources/include/js/jquery-3.6.0.min.js">
-      </script>
+      <script type="text/javascript" src="/resources/include/js/jquery-3.6.0.min.js"></script>
+      
       <script type="text/javascript">
 	  var clicks= 0;
       $(function(){
@@ -69,12 +82,46 @@
 		<div class = "container">
 		</br><br></br></br>
 			<!--뉴스 게시판-->
-			<div id="news_chart">News Board</div>
+			<div id="news_chart"><h4>***News Chart***</h4>
+				<table class="table" style="width:100%;">
+				<thead>
+				<colcolgroup>
+				  <col width ="10%" />
+                  <col width ="30%" />
+                  <col width ="60%" />
+				</colcolgroup>
+					 <tr>
+		                     <th data-value="n_no" class="order text-center">No</th>
+		                     <th class="text-center">title</th>
+		                     <th class="text-center">sub-title</th>
+		                    
+		                  </tr>
+				</thead>
+				<tbody>
+					<c:choose>
+      					<c:when test="${not empty newsList}">
+      						<c:forEach var="news" items="${newsList}" varStatus="status">
+      							<tr class="text-center" id="notice_line" data-num="${news.n_no}">
+      								<td class="col-md-2">${news.n_no}</td>
+      								<td class="col-md-4">${news.n_title}</td>
+      								<td class="text-left">${news.n_note}</td>
+      							</tr>
+      						</c:forEach>
+      					</c:when>
+      					<c:otherwise>
+      						<tr>
+      							<td colspan="4" class="tac text-center">등록된 공지사항이 존재하지 않습니다.</td>
+      						</tr>
+      					</c:otherwise>
+      				</c:choose>
+      				</tbody>
+				</table>
+			</div>
 			<br><br><br><br>
 			<!-- 뮤직 차트-->
 			<div id="music_chart">
 				<!--랭킹 게시판-->
-				<div id="rank_chart">Music Chart
+				<div id="rank_chart"><h4>***Music Chart***</h4>
 					<table summary="음악 랭크 차트" class="table">
 						<thead>
 		                  <tr>
@@ -85,28 +132,76 @@
 		                  </tr>
 		               </thead>
 						<tbody>
-							 <c:choose>
-								<c:when test="${not empty mchart_list}">
-									<c:forEach var="chart" items="${mchart_list}" varStatus="status">
-										<tr class="text-center" data-num="${chart.m_no}">
-		      								<td>${chart.m_no}</td>
-		      								<td class="text-center">${chart.m_title}</td>
-		      								<td class="text-center">${chart.m_genre}</td>
-		      								<td class="text-center">${chart.m_recommentCnt}</td>
-										</tr>
-									</c:forEach>
-								</c:when>
-								<c:otherwise>
-									<tr>
-		      							<td colspan="4" class="tac text-center">게시물이 존재하지 않습니다.</td>
-		      						</tr>
-								</c:otherwise>
-							</c:choose> 
+										<c:choose>
+											<c:when test="${not empty recentList }">
+												<!-- if 문으로 not empty가 true 일때, list가 있을 때 실행되는 구문. -->
+							
+							
+												<c:forEach var="board" items="${recentList}" varStatus="status">
+													<tr class="rank_track" data-num="${board.m_no}">
+														<!-- click function() -->
+														
+															<td class="track_nm" style="text-align:center;">${board.m_title}</td>
+															<td class="artist_nm" style="text-align:center;">${board.m_name}</td>
+															<td class="artist_nm" style="text-align:center;">${board.m_genre}</td>
+														<td style="text-align:center;">${board.m_recommentcnt}</td>
+													</tr>
+												</c:forEach>
+							
+											</c:when>
+							
+							
+											<c:otherwise>
+												<!-- if문의 else -->
+												<p class="tac text-center">등록된 게시물이 존재하지 않습니다.</p>
+											</c:otherwise>
+										</c:choose>
+							
+							
 						</tbody>
 					</table>	
 				</div>
 				<!--장르 음악게시판-->
-				<div id="like_chart">Genre Chart</div>
+				<div id="like_chart">
+					<h4>***Like Chart***</h4>				
+				<table summary="음악 랭크 차트" class="table">
+						<thead>
+		                  <tr>
+		                     <th data-value="m_no" class="order text-center">No</th>
+		                     <th class="text-center">title</th>
+		                     <th class="text-center">genre</th>
+		                     <th class="text-center">recommend</th>
+		                  </tr>
+		               </thead>
+						<tbody>
+										<c:choose>
+											<c:when test="${not empty recentList }">
+												<!-- if 문으로 not empty가 true 일때, list가 있을 때 실행되는 구문. -->
+							
+							
+												<c:forEach var="board" items="${recentList}" varStatus="status">
+													<tr class="rank_track" data-num="${board.m_no}">
+														<!-- click function() -->
+														
+															<td class="track_nm" style="text-align:center;">${board.m_title}</td>
+															<td class="artist_nm" style="text-align:center;">${board.m_name}</td>
+															<td style="text-align:center;">${board.m_genre}</td>
+															<td style="text-align:center;">${board.m_recommentcnt}</td>
+													</tr>
+												</c:forEach>
+							
+											</c:when>
+							
+							
+											<c:otherwise>
+												<!-- if문의 else -->
+												<p class="tac text-center">등록된 게시물이 존재하지 않습니다.</p>
+											</c:otherwise>
+										</c:choose>
+
+						</tbody>
+					</table>	
+				</div>
 			</div>
 		</div>
    </body>

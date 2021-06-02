@@ -4,8 +4,8 @@
 	
 	<insert id = "addCart" parameterType="cart">
 	
-		insert into m_cart (cart_id, user_id, m_no)
-		values( seq_cart.nextval, #{user_id}, #{m_no})
+		insert into m_cart (cart_id, user_id, m_no )
+		values( seq_cart.nextval, #{user_id}, #{m_no} )
 		
 	</insert>
 	

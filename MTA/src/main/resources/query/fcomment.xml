@@ -12,7 +12,7 @@
 		<!-- 댓글 칼럼 추가  -->
 		<insert id="fcommentInsert" parameterType="comment">
 			Insert into free_board_comment (f_no, fc_no, user_id, fc_text)  
-			values (#{f_no}, free_board_seq.nextval, #{user_id}, #{fc_text})
+			values (#{f_no}, fcomment_seq.nextval, #{user_id}, #{fc_text})
 		</insert> 
 		
 		<!-- 댓글글삭제  -->

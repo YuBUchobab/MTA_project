@@ -5,15 +5,17 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
 @Data
-public class NewsVO {
-	private int n_no = 0;			// 뉴스 글 번호
-	private String n_title = ""; 	// 뉴스 제목
-	private String n_note = "";		// 뉴스 부재목
-	private String n_text = ""; 	// 뉴스 내용
-	private String n_regdate;		// 뉴스등록 시간
-	
-	private String n_image = ""; 	// 뉴스 이미지
-	private MultipartFile file;		// 파일
+public class NewsVO extends commonVO{
+		private int n_no=0;
+	  
+	    private String n_text="";
+	    private String n_regdate;
+	    private String n_title="";
+	    private String n_note="";
+	    
+	    private String n_image="";	// 파일 경로
+	    private MultipartFile file; //파일 자체
+	    private String n_thumb 	=""; //실제 서버에서 저장할 썸네일 이미지 파일용 
 	
 	
 }

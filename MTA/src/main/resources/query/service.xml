@@ -22,10 +22,10 @@
 		 <select id="serviceboardList" parameterType="service" resultType="service">
 		 <![CDATA[
 		 	SELECT 
-		 	scb_no, scb_title, scb_text, to_char(scb_regdate, 'YYYY-MM-DD') as scb_regdate, scb_replycnt
+		 	scb_no, scb_title, scb_text, user_id, to_char(scb_regdate, 'YYYY-MM-DD') as scb_regdate, scb_replycnt
 		 	FROM ( 
 		 		SELECT /*+ INDEX_DESC(service_center_board service_center_board_pk)*/
-		 				rownum as rnum, scb_no, scb_title, scb_text , scb_regdate, scb_replycnt
+		 				rownum as rnum, scb_no, scb_title, user_id, scb_text , scb_regdate, scb_replycnt
 		 				from service_center_board
 		 	WHERE ]]>
 		 	<trim prefix="(" suffix=") AND " prefixOverrides="AND">
@@ -48,8 +48,8 @@
 		
 		<!-- 게시판 리스트 칼럼 추가  -->
 		<insert id="serviceboardInsert" parameterType="service">
-			Insert into service_center_board (scb_no, scb_title, scb_text)  
-			values (service_seq.nextval, #{scb_title} , #{scb_text} )
+			Insert into service_center_board (scb_no, scb_title, user_id, scb_text)  
+			values (service_seq.nextval, #{scb_title} ,#{user_id}, #{scb_text} )
 		</insert> 
 		
 		
@@ -57,7 +57,7 @@
 		<select id="serviceboardDetail" parameterType="service" resultType="service">
 			/* Board - freeboardDetail */
 			SELECT
-					scb_no, scb_title, scb_text, to_char(scb_regdate, 'YYYY-MM-DD HH:MM:SS') as scb_regdate, scb_replycnt 
+					scb_no, scb_title, scb_text,usr_id, to_char(scb_regdate, 'YYYY-MM-DD HH:MM:SS') as scb_regdate, scb_replycnt 
 			FROM service_center_board
 			WHERE scb_no = #{scb_no}
 		</select> 

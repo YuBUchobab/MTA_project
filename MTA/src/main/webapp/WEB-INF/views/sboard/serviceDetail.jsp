@@ -85,7 +85,7 @@
    <body>
    <div class = "container-fluid">
          <form name = "f_data" id = "f_data" method = "post">
-            <input type = "hidden" name = "f_no" value = "${detail.scb_no}">
+            <input type = "hidden" name = "scb_no" value = "${detail.scb_no}">
          </form>
     </div>
    	   		
@@ -107,7 +107,7 @@
 	   			</tr>
    				<tr>
    					<td class="col-md-3">작성자 </td>
-   					<td colspan="3" class="col-md-9 text-left">mta</td>
+   					<td colspan="3" class="col-md-9 text-left">${detail.user_id}</td>
    				</tr>
    				<tr>
    					<td class="col-md-3">글제목 </td>

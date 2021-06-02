@@ -2,6 +2,7 @@ package com.spring.mta.service;
 
 import java.util.List;
 
+import com.spring.mta.vo.MusicBoardVO;
 import com.spring.mta.vo.freeBoardVO;
 
 
@@ -16,6 +17,7 @@ public interface freeBoardService {
 	public int freeboardUpdate (freeBoardVO bvo) throws Exception;
 	
 	public int freeRecomment(int num);
+	
 	
 	
 

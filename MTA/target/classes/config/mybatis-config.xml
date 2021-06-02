@@ -4,6 +4,7 @@
 	 <typeAliases>
 		<typeAlias type="com.spring.mta.vo.freeBoardVO" alias="board"/>
 		<typeAlias type="com.spring.mta.vo.fcommentVO" alias="comment"/>
+		<typeAlias type="com.spring.mta.vo.mcommentVO" alias="mcomment"/>
 		<typeAlias type="com.spring.mta.vo.UserVO" alias="user"/>
 		<typeAlias type="com.spring.mta.vo.MusicBoardVO" alias="mboard"/>
 		<typeAlias type="com.spring.mta.vo.serviceVO" alias="service"/>
@@ -11,6 +12,9 @@
 		<typeAlias type="com.spring.mta.vo.purchaseVO" alias="purchase"/>
 		<typeAlias type="com.spring.mta.vo.salesVO" alias="sales"/>
 		<typeAlias type="com.spring.mta.vo.CartVO" alias="cart"/>
+		<typeAlias type="com.spring.mta.vo.NewsVO" alias="news"/>
+		<typeAlias type="com.spring.mta.vo.ReplyVO" alias="reply"/>
+		<typeAlias type="com.spring.mta.vo.LikeCntVO" alias="like"/>
 	</typeAliases>
 	 
 	 

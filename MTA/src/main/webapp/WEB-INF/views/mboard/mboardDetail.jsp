@@ -33,7 +33,7 @@
 	href="/resources/include/dist/css/bootstrap-theme.css">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href ="/resources/include/css/mboard/musicPlayer.css">
-
+	<link rel="stylesheet" href ="/resources/include/css/mboard/musicDetail.css">
 <script type="text/javascript"
 	src="/resources/include/js/jquery-1.12.4.min.js"></script>
 
@@ -49,37 +49,36 @@
 		<![endif]-->
 <title></title>
 <style type="text/css">
-.coverImg{
-	height: 550px;
-	width: 550px;
-}
-.fa {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  font-size: 18px;
-  cursor: pointer;
-  color: #555;
-}
-.fa-play {
-  display: none;}
-  
-  #volume-control{
-  	size: 40%;
+input[type="range"] {
+	cursor :default;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  &:focus {
+    outline: none;
   }
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+ 
+}
 </style>
 <script type="text/javascript">
 	let buttonCheck = 0; // 수정버튼과 삭제버튼을 구별하기 위한 변수 (비밀번호가 일치했을 때 )
 	
 	$(function() {
+		
+		//음악파일 가져오기 및 볼륨 제어  
 		let path = $("#m_file").val();
 		console.log(path);
+
 		var audio = new Audio(path);
 		console.log(audio);
 		audio.volume = 0.4;
 		audio.autoplay = true;
-		$('.trigger').click(function() {
-			if (audio.paused == false) {
+
+		$('.trigger').click(function(){
+			if (audio.paused == false){
 				audio.pause();
 				$('.fa-play').show();
 				$('.fa-pause').hide();
@@ -91,23 +90,34 @@
 				$('.music-card').addClass('playing');
 			}
 		});
-		let volume = document.querySelector("#volume-control");
-		volume.addEventListener("change", function(e) {
-			audio.volume = e.currentTarget.value / 100;
+		
+
+		$("#volumeSlider").change(function(){
+		    let volume = $(this).val();
+		    audio.volume = volume ;
 		});
+		
 		$("#pwdChk").css("visibility", "hidden"); /* 화면에 보이진 않지만, 영역은 차지할 수 있도록.(div) */
+		
+		
 		//수정버튼 클릭 시 처리 이벤트
-		$("#updateFormBtn").click(function() {
+		$("#updateFormBtn").click(function(){
 			$("#pwdChk").css("visibility", "visible");
 			$("#msg").text("계정 비밀번호를 입력해 주세요.").css("color", "000099");
-			buttonCheck = 1;
+			buttonCheck = 1;  
+			$("#f_data").attr("action", "/board/updateForm");
+			$("#f_data").submit();
+			
 		});
 		//삭제버튼 클릭 시 처리 이벤트
-		$("#boardDeleteBtn").click(function() {
+		$("#boardDeleteBtn").click(function(){
 			$("#pwdChk").css("visibility", "visible");
-			$("#msg").text("계정 입력한 비밀번호를 입력해 주세요.").css("color", "000099");
-			buttonCheck = 2;
+			$("#msg").text("계정 입력한 비밀번호를 입력해 주세요.").css("color", "000099"); 
+			$("#f_data").attr("action", "/board/mBoardDelete");
+			$("#f_data").submit();
+			 buttonCheck = 2; 
 		});
+		
 		//비밀번호 확인 버튼 클릭 시 처리 이벤트
 		$("#pwdBut").click(function(event) {
 			boardPwdConfirm();
@@ -132,6 +142,50 @@
 			});
 			$("#f_data").submit();
 		});
+		
+		
+		//좋아요 버튼 클릭 이벤트 
+		$("#likeBtn").click(
+				function() {
+
+						if (confirm("추천하시겠습니까?")) {
+							var m_no = $(this).attr("data-num");
+							var m_recommend = $(this).attr("data-recom");
+							var recommend_no = parseInt(m_recommend) + 1;
+							var currM_no = $(this).attr("data-num");
+							var heart = $("<span>");
+							heart.addClass("glyphicon glyphicon-heart");
+							heart.attr("aria-hidde",true);
+							/* console.log("currM_no :"+currM_no);
+							console.log("m_no: "+currM_no); */
+
+							$.ajax({
+										url : "/board/recommend",
+										type : "get",
+										data : {m_no : m_no},
+										success : function(result) {
+
+											if (result == 1) {
+												alert("게시물을 추천하셨습니다.");
+												console.log(recommend_no);
+												$(
+														".btn[data-num='"+ m_no + "']").html(recommend_no).append(하트);
+
+											} else {
+												alert("이미 추천하신 게시물입니다.");
+											}
+										}
+									}).fail(function() {
+								alert("시스템오류");
+							});
+
+						}
+
+					
+
+				});
+		
+		
 		//장바구니 버튼 이벤트 
 		$("#addCartBtn").click(function() {
 			if (confirm("장바구니에 담으시겠습니까?")) {
@@ -139,12 +193,17 @@
 
 				$.ajax({
 							url : "/order/addCart",
-							type : "get",
-							data : {m_no : m_no},
+							type : "post",
+							data : $("#f_data").serialize(),
 							success : function(result) {
 								if (result == 1) {
 								if(confirm("장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?")){
-									location.href = "/order/cartList";
+									$("#f_data").attr({
+										"method" : "GET",
+										"action" : "/order/cartList"
+									});
+									$("#f_data").submit();
+									
 								}
 										
 								} else {
@@ -159,13 +218,39 @@
 
 
 		});
+		
+		 
+        /* 댓글달기 버튼 클릭 시 처리 이벤트 */
+    	   $("#mc_insertBtn").click(function () {
+    		   if(${userInfo.user_id != ''}){
+    			   $("#mcomment").attr({
+      					"method" : "post",
+      					"action" : "/mcomment/mcommentInsert"
+      				});
+      				$("#mcomment").submit();
+       		   }else{
+    			   
+    			   alert("로그인후 이용 가능합니다.!");
+    		}
+    		
+		}); 
+		
+		/* 댓글삭제 버튼 클릭 시 처리 이벤트 */
+        $(".mcdeleteBtn").click(function(){
+     	   
+        	if(confirm("정말 삭제하시겠습니까?")){
+        		
+				$("#mc_form").attr("action","/mcomment/mcDelete");
+				$("#mc_form").submit();
+			}
+        });
 	});
 		
 	function boardPwdConfirm() {
-		if(!chkData("#user_passwd", "비밀번호를"))return;
+		console.log($("#user_pwd").val());
+		if(!chkData("#user_pwd", "비밀번호를"))return;
 		else {
-		
-			$.ajax({
+				$.ajax({
 				url : "/mboard/pwdConfirm.json", //전송 url
 				type : "post",
 				data : $("#f_pwd").serialize(),
@@ -179,7 +264,7 @@
 					if (resultData == 0) {
 						console.log(resultData);
 						$("#msg").text("비밀번호를 확인해주세요.");
-						$("#user_passwd").select();
+						$("#user_pwd").select();
 					} else if (resultData == 1) {
 						$("#msg").text("");
 						console.log(resultData);
@@ -206,19 +291,19 @@
 
 	
 	<div class="container">
-	<form name= "f_data" id = "f_data">
-				<input type ="hidden" name = "m_no" value ="${detail.m_no}"/>
-				
-			</form>		
-	<form name = "file" id = "file">
-		<input type ="hidden" name = "m_file" id = "m_file" value ="/uploadStorage/audioFile/${detail.m_file}"/>	
-	</form>
+		<form name="f_data" id="f_data">
+			<input type="hidden" name="m_no" id="m_no" value="${detail.m_no}" /> <input
+				type="hidden" name="user_id" id="user_id" value="test" />
+		</form>
+		<form name="file" id="file">
+			<input type="hidden" name="m_file" id="m_file"
+				value="/uploadStorage/audioFile/${detail.m_file}" />
+		</form>
 		<div id="pwdChk" class="authArea  col-md-9 text-left">
 			<form name="f_pwd" id="f_pwd" class="form-inline">
-				<input type="hidden" name="m_no" id="m_no" value="${detail.m_no}">
-				<input type="hidden" name="user_id" id="user_id" value="${detail.user_id}"> 
-				<label for="user_passwd" >비밀번호 : </label> 
-				<input type="password" name="user_passwd" id="user_passwd" class="form-control"/>
+				<input type="hidden" name="b_num" id="b_num" value="${detail.m_no}">
+				<label for="b_pwd">비밀번호 : </label> <input type="password"
+					name="b_pwd" id="b_pwd" class="form-control" />
 
 				<button type="button" id="pwdBut" class="btn btn-default btn-sm">확인</button>
 				<button type="button" id="pwdButCancel"
@@ -228,74 +313,177 @@
 		</div>
 		<div class="btnArea col-md-3 text-right">
 			<button type="button" id="updateFormBtn"
-				class="btn btn-primary btn-sm">수정</button>
+				class="btn btn-default btn-sm">수정</button>
 			<button type="button" id="boardDeleteBtn"
-				class="btn btn-primary btn-sm">삭제</button>
+				class="btn btn-default btn-sm">삭제</button>
 			<button type="button" id="boardInsertBtn"
-				class="btn btn-primary btn-sm">쓰기</button>
+				class="btn btn-default btn-sm">쓰기</button>
 			<button type="button" id="boardListBtn"
-				class="btn btn-primary btn-sm">목록</button>
+				class="btn btn-default btn-sm">목록</button>
 		</div>
+		<%-- <div style="background-image: url('/uploadStorage/coverImg/${detail.m_coverimage}');" id ="background"> --%>
+			<div class='music-card playing'>
+				<div class='image'>
+					<img id ="backImg" src="/uploadStorage/coverImg/${detail.m_coverimage}" />
+				</div>
+				<div>
+					<img id ="thumbImg" src="/uploadStorage/coverImg/${detail.m_coverimage}" />
+				</div>
+				<div class='wave'></div>
+				<div class='wave'></div>
+				<div class='wave'></div>
+
+				<div class='info'>
+					<div>
+						<p class="fa fa-pause trigger" style="cursor: pointer;">❚❚</p>
+
+						<p class="fa fa-play trigger" style="cursor: pointer;">▶</p>
+					</div>
+
+
+					<h2 class='title'>${detail.m_title}</h2>
+					<div class='artist'>${detail.m_name}</div>
+					<div>
+						<input id="volumeSlider" class ="range-style" type="range" min="0" max="1" step="0.01" value="0.4" />
+					</div>
+				</div>
+
+			</div>
+		<!-- </div> -->
+
 		<div class="text-center">
-			<table class="table table-bordered">
-				<tbody>
-					<tr >						
-						<%-- <td class="col-md-3 text-left"><img src="/uploadStorage/coverImg/${detail.m_coverimage}" class = "coverImg"/></td> --%>
-						<td colspan="2" class ="text-center">
-							<div class='music-card playing'>
-								<div class='image'>
-									<img src="/uploadStorage/coverImg/${detail.m_coverimage}" />
-								</div>
-								<div class='wave'></div>
-								<div class='wave'></div>
-								<div class='wave'></div>
 
-								<div class='info'>
-									<div >
-										<p class="fa-pause trigger"style = "cursor: pointer;">❚❚</p>
-
-										<p class="fa-play trigger" style = "cursor: pointer;">▶</p>
-										
-									</div>
-									
-
-									<h2 class='title'>${detail.m_title}</h2>
-									<div class='artist'>${detail.m_name}</div>
-								</div>
-							</div>
-						</td>					
+			
+			<div id="detialInfo">
+			<table class = "">
+					<tr>
+						<td><label class="col-md-1">Author</label></td>
+						<td>${detail.m_name}</td>
 					</tr>
 					<tr>
-						<td> 
-							<p> <input type="range" id="volume-control"></p>
-						</td>
+						<td><label class="col-md-1">Title</label></td>
+						<td>${detail.m_title}</td>
 					</tr>
 					<tr>
-						<td class="col-md-3">음악이름</td>
-						<td colspan="3" class="col-md-9 text-left">${detail.m_name}</td>
+						<td><label class="col-md-1">BPM</label></td>
+						<td>${detail.m_bpm}</td>
+					</tr>
+					<tr>
+						<td><label class="col-md-1">Genre</label></td>
+						<td>${detail.m_genre}</td>
+					</tr>
+					<tr>
+						<td><label class="col-md-1">Content</label></td>
+						<td>${detail.m_explan}</td>
 					</tr>
 
-					<tr>
-						<td class="col-md-3">글제목</td>
-						<td colspan="3" class="col-md-9 text-left">${detail.m_title}</td>
-					</tr>
-					<tr>
-						<td class="col-md-3">BPM</td>
-						<td colspan="3" class="col-md-9 text-left">${detail.m_bpm}</td>
-					</tr>
-					<tr class="table-height">
-						<td class="col-md-3">글내용</td>
-						<td colspan="3" class="col-md-9 text-left">${detail.m_explan}</td>
-					</tr>
-				</tbody>
-			</table>
+				</table>									
+
+			</div>
 			<div>
-				<button type = "button" class = "btn btn-success" id = "checkOutBtn">구매</button>
-				<button type = "button" class = "btn btn-success" id = "addCartBtn">장바구니 담기</button>
+				<c:choose>
+					<c:when test="${detail.m_price !=0}">
+						<c:if test="${detail.m_stock !=0 }">
+							<td><button type="button" class="btn btn-default"
+									id="paymentBtn" aria-label="Left Align">
+									<span aria-hidden="true">BUY</span>
+								</button></td>
+							<td>
+								<button type="button" class="btn btn-success" id="addCartBtn">
+									<span class="glyphicon glyphicon-shopping-cart"
+										aria-hidden="true"></span>
+								</button>
+							</td>
+						</c:if>
+						<c:if test ="${detail.m_stock !=1 }">
+						<td><button type="button" class="btn btn-default" disabled="disabled"
+									id="paymentBtn" aria-label="Left Align">
+									<span aria-hidden="true">SOLD</span>
+								</button></td>
+						</c:if>
+					</c:when>
+					<c:otherwise>
+						<td><a href="/uploadStorage/audioFile/${detail.m_file}"
+							target="_blank"><button type="button" class="btn btn-default"
+									id="fileDownBtn" aria-label="Left Align">
+									<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+
+								</button></a></td>
+					</c:otherwise>
+				</c:choose>
+			</div>
+			<div class = "like">
+				
+				<div><button type="button" class="btn btn-default btn-lg" id ="likeBtn" data-num="${detail.m_no}" data-recom ="${detail.m_recommentcnt }">
+				
+				${detail.m_recommentcnt}<span class="glyphicon glyphicon-heart" aria-hidden="true"></span></button>
+				
 			</div>
 		</div>
-		<div>
-		<jsp:include page="mReply.jsp"/>
+		<hr />
+			<h4 class="col-md-2" id="h">댓글 작성</h4>
+			 	<div class="container-fluid">
+			 	<%-- 	<form name = "f_data" id = "f_data" method = "post">
+            			<input type = "hidden" name = "f_no" value = "${detail.f_no}">
+         			</form> --%>
+			 		<form id="mcomment" name="mcomment">
+			 			 <input type = "hidden" name = "m_no" value = "${detail.m_no}" />
+			 			 <input type = "hidden" name = "user_id" value = "${userInfo.user_id}" />
+			 			<textarea rows="5" class="col-md-11" maxlength="2000" id="mc_text" name="mc_text"></textarea>
+			 		</form>
+			 		<button type="button" id="mc_insertBtn" class="btn btn-primary btn-sm" >댓글등록</button>
+			 		<hr />
+			 		
+			 		
+			 		 		
+		         <%-- ====================== 댓글 리스트 시작 ====================== --%>
+		         <div id = "mcommentList">
+		       
+		            <table summary = "댓글 리스트" class = "table">
+		               <colgroup>
+		               	  <col width ="100%" />
+		               </colgroup>
+		             
+		               <tbody id="list" class="table-striped" >
+		      				<!-- 데이터 출력 -->
+		      				<c:choose>
+		      					<c:when test="${not empty mcommentList}">
+		      						<c:forEach var="comment" items="${mcommentList}" varStatus="status">
+		      						  <form id="mc_form" method="post">
+									         	<input type = "hidden" name = "mc_no" value = "${comment.mc_no}">
+									         	<%-- <input type = "hidden" name = "fc_no" value = "${c.fc_no}"> --%>
+									      		<input type = "hidden" name = "m_no" value = "${comment.m_no}">
+									   </form>
+		      						<tr class="text-center" data-num="${comment.mc_no}">
+											<td class="text-left">
+		      								<%-- <td class="text-center">${comment.fc_no}</td>  --%>
+		      								 <%-- <td class="text-center">${comment.f_no}</td>  --%>
+		      								<span style="font-weight:bold;">${comment.user_id}  /  ${comment.mc_regdate}</span><br/>
+		      								<span class="col-md-11">${comment.mc_text }</span>
+		      								
+		      								<c:if test="${comment.user_id == userInfo.user_id}">
+		      									<button class="mcdeleteBtn btn-primary btn-sm" type="button"  name="mcdeleteBtn">삭제</button>
+		      								</c:if>
+		      								
+		      								
+		      								</td>
+		      								
+		 
+		      							</tr>
+		      							
+		      						</c:forEach>
+		      					</c:when>
+		      					<c:otherwise>
+		      						<tr>
+		      							<td colspan="4" class="tac text-center">등록된 댓글이 존재하지않습니다</td>
+		      						</tr>
+		      					</c:otherwise>
+		      				</c:choose>
+		               </tbody>
+		            </table>
+		           
+			 	</div>  			
+			</div>
 		</div>
 	</div>
 </body>

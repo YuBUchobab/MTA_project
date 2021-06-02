@@ -2,10 +2,10 @@ package com.spring.mta.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.common.file.FileUploadUtil;
 import com.spring.mta.dao.fcommentDao;
 import com.spring.mta.vo.fcommentVO;
 

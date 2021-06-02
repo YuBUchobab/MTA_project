@@ -23,6 +23,10 @@ public interface MusicBoardService {
 
 	public int musicboardDelete(int m_no);
 
+	public int boardListCnt(MusicBoardVO mvo);
+
+	public List<MusicBoardVO> musicRecentList(MusicBoardVO mvo);
+
 	
 
 	

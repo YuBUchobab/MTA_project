@@ -50,6 +50,8 @@
 				
 			});
 			
+		
+			
 			// 마이페이지로 이동
 			 $("#mypage_board").click(function() {
 					

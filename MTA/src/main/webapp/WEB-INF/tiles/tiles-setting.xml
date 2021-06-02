@@ -57,4 +57,10 @@
       <put-attribute name="title" value="MTA결제관련페이지" />
        <put-attribute name="body" value="/WEB-INF/views/order/{1}.jsp" />
      </definition> 
+     
+     
+	<definition name="nboard/*" extends="content">
+      <put-attribute name="title" value="MTA결제관련페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/nboard/{1}.jsp" />
+     </definition> 
 </tiles-definitions>

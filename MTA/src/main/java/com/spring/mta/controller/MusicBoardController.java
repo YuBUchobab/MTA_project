@@ -4,6 +4,7 @@ import java.util.List;
 
 
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,10 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import com.spring.mta.common.vo.PageDTO;
+import com.spring.mta.service.LikeService;
 import com.spring.mta.service.MusicBoardService;
+
+import com.spring.mta.service.mcommentService;
+import com.spring.mta.vo.LikeCntVO;
 import com.spring.mta.vo.MusicBoardVO;
 import com.spring.mta.vo.UserVO;
+
+import com.spring.mta.vo.mcommentVO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -26,6 +33,9 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor  
 public class MusicBoardController {
 	private MusicBoardService musicBoardService; 
+	private mcommentService mcommentservice;
+	
+	private LikeService likeService;
 	
 /***********	call out Music_board List*****
 ************************************************/	
@@ -36,6 +46,14 @@ public class MusicBoardController {
 		List<MusicBoardVO> boardList  = musicBoardService.musicBoardList(mvo);
 		model.addAttribute("boardList",boardList);
 		
+		List<MusicBoardVO> recentList = musicBoardService.musicRecentList(mvo);
+		model.addAttribute("recentList",recentList);
+		
+		int total = musicBoardService.boardListCnt(mvo);
+		model.addAttribute("pageMaker", new PageDTO(mvo, total));
+		
+		 
+
 		return "mboard/mboardList";
 
 	}	
@@ -76,11 +94,14 @@ public class MusicBoardController {
 	
 	
 	@RequestMapping(value="/boardDetail", method = RequestMethod.GET)
-	public String boardDetail(@ModelAttribute("data") MusicBoardVO mvo, Model model) {
+	public String boardDetail(@ModelAttribute("data") MusicBoardVO mvo, mcommentVO mco, Model model) {
 		log.info("board detail 호출 성공 ");
 		
 		MusicBoardVO detail = musicBoardService.boardDetail(mvo);
 		model.addAttribute("detail",detail);
+		
+		List<mcommentVO> mcommentList =  mcommentservice.mcommentList(mco);
+		model.addAttribute("mcommentList",mcommentList);
 		
 		return "mboard/mboardDetail";
 	}
@@ -109,26 +130,36 @@ public class MusicBoardController {
 	}
 	
 	//추천 수 증가 
-	@ResponseBody
-	@RequestMapping(value ="/recommend", method = RequestMethod.GET)
-	public String recommend(@ModelAttribute MusicBoardVO mvo,  @RequestParam(value = "m_no") int m_no) {
-		log.info("recommend호출 ");
-		
-		mvo.setM_no(m_no);
-		
-		int result =0;
-		
-		result = musicBoardService.recommend(mvo);
-		
-		
-		log.info("restult :"+result);
-		
-		
-		return String.valueOf(result);
-		
-		
-		
-	}
+		@ResponseBody
+		@RequestMapping(value ="/recommend", method = RequestMethod.GET)
+		public String recommend(@ModelAttribute("data") MusicBoardVO mvo,  @RequestParam(value = "m_no") int m_no)throws Exception {
+			log.info("recommend호출 ");
+			int likecheck = 0 ;
+			int result =0;
+			int likeAdd =0;
+			LikeCntVO lvo = new LikeCntVO();
+			
+			lvo.setUser_id("test");
+			lvo.setM_no(m_no);
+			likecheck = likeService.likeCheck(lvo);
+			
+			
+			if(likecheck <1) {
+				mvo.setM_no(m_no);
+				result = musicBoardService.recommend(mvo);
+				
+				lvo.setUser_id("test");
+				lvo.setM_no(m_no);
+				likeAdd = likeService.likeAdd(lvo);
+				
+				log.info("restult :"+result);
+			}else {
+				
+				result = -1;
+			}
+			
+			return String.valueOf(result);	
+		}
 	
 	/*********************************************************
 	 * 비밀번호 확인

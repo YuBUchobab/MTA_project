@@ -2,6 +2,7 @@ package com.spring.mta.dao;
 
 import java.util.List;
 
+
 import com.spring.mta.vo.MusicBoardVO;
 import com.spring.mta.vo.UserVO;
 
@@ -20,5 +21,9 @@ public interface MusicBoardDao {
 	public int pwdConfirm(UserVO uvo);
 
 	public int musicboardDelete(int num);
+
+	public int boardListCnt(MusicBoardVO mvo);
+
+	public List<MusicBoardVO> musicRecentList(MusicBoardVO mvo);
 
 }

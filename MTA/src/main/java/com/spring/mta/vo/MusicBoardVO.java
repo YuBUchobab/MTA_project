@@ -18,9 +18,9 @@ public class MusicBoardVO extends commonVO{
 	private String m_price="";	//음악 판매 가격
 	private String m_genre = "";//음악 장르
 	private int    m_isfree=0;	//무표배포 여부
+	private int m_stock = 0; 	//재고
 	
-	
-	private int m_recommentCnt=0;//음악 게시판 추천수
+	private int m_recommentcnt=0;//음악 게시판 추천수
 	private int m_views  = 0;	// 음악 게시판 조회수
 	private int m_replyCnt = 0;	// 음악 게시판 댓글개수
 	

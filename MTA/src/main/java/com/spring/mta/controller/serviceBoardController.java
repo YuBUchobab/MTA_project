@@ -87,7 +87,7 @@ public class serviceBoardController {
 			url = "/sboard/serviceWriteForm";
 		}
 		
-		return "redirect:"+url;
+		return url;
 	}
 	
 

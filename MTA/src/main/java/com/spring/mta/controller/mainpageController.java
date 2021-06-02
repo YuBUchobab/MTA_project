@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.mta.service.MusicBoardService;
+import com.spring.mta.service.NewsService;
 import com.spring.mta.service.mainpageService;
 import com.spring.mta.vo.MusicBoardVO;
+import com.spring.mta.vo.NewsVO;
 import com.spring.mta.vo.UserVO;
 
 import lombok.AllArgsConstructor;
@@ -28,17 +30,23 @@ public class mainpageController {
 	private mainpageService mpService;
 	private MusicBoardService musicBoardService;
 	
+	private NewsService newsS;
+	
 	/********************************************************
 	 * 메인페이지로 이동
 	 * ******************************************************/
 	@GetMapping("/mainpage")
-	 public String goMain(MusicBoardVO mbvo, Model model, HttpSession session){
+	 public String goMain(MusicBoardVO mvo, Model model, NewsVO nvo, HttpSession session){
 		 	log.info("mainpage 호출 완료");
 			log.info("musicChart 호출 완료");
 			
-			List<MusicBoardVO> mchart_list = musicBoardService.musicChart(mbvo);
-			model.addAttribute("mchart_list",mchart_list);
+		
 	
+			List<MusicBoardVO> recentList = musicBoardService.musicRecentList(mvo);
+			model.addAttribute("recentList",recentList);
+			
+			List<NewsVO> newsList = newsS.listnews(nvo);
+			model.addAttribute("newsList",newsList);
 			
 		 return "mainpage/mainpage";
 	 }

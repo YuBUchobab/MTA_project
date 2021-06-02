@@ -75,18 +75,23 @@
             
             /* 댓글달기 버튼 클릭 시 처리 이벤트 */
         	   $("#fc_insertBtn").click(function () {
-				$("#fcomment").attr({
-					"method" : "post",
-					"action" : "/fcomment/fcommentInsert"
-				});
-				$("#fcomment").submit();
+        		   if(${userInfo.user_id != ''}){
+        			   $("#fcomment").attr({
+          					"method" : "post",
+          					"action" : "/fcomment/fcommentInsert"
+          				});
+          				$("#fcomment").submit();
+           		   }else{
+        			   alert('로그인후 이용가능 합니다.');
+           		   }
+        		
 			}); 
             
         	   /* 댓글삭제 버튼 클릭 시 처리 이벤트 */
-               $("#fcdeleteBtn").click(function(){
+               $(".fcdeleteBtn").click(function(){
             	   
-            	   console.log("댓글삭제클릭");
                	if(confirm("정말 삭제하시겠습니까?")){
+               		
    					$("#fc_form").attr("action","/fcomment/fcDelete");
    					$("#fc_form").submit();
    				}
@@ -203,8 +208,14 @@
 		      								 <%-- <td class="text-center">${comment.f_no}</td>  --%>
 		      								<span style="font-weight:bold;">${comment.user_id}  /  ${comment.fc_regdate}</span><br/>
 		      								<span class="col-md-11">${comment.fc_text }</span>
-		      								<button class="btn btn-primary btn-sm" type="button" id="fcdeleteBtn" name="fcdeleteBtn">삭제</button>
+		      								
+		      								<c:if test="${comment.user_id == userInfo.user_id}">
+		      									<button class="fcdeleteBtn btn-primary btn-sm" type="button"  name="fcdeleteBtn">삭제</button>
+		      								</c:if>
+		      								
+		      								
 		      								</td>
+		      								
 		 
 		      							</tr>
 		      							

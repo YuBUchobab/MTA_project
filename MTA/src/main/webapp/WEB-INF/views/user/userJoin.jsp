@@ -48,8 +48,8 @@
         // 관심음
         $(function() {
                     //아이디 중복확인 
-                    $("#user_id").blur(function() {
-                        if ($('#user_id').val() == '') {
+                    $("#id").blur(function() {
+                        if ($('#id').val() == '') {
                             $('#id_check').text('아이디를 입력하세요.');
                             $('#id_check').css('color', 'red');
                         } else if (idJ.test($('#user_id').val()) != true) {
@@ -57,7 +57,7 @@
                             $('#id_check').css('color', 'red');
                         } else if ($('#user_id').val() != '') {
 
-                            var user_id = $('#user_id').val();
+                            var user_id = $('#id').val();
                             $.ajax({
                             	 url: "/user/idCheck.json",
                                 type: "post",
@@ -93,7 +93,7 @@
                     }); //blur 
                     $('form').on('submit', function() {
                         var inval_Arr = new Array(5).fill(false);
-                        if (idJ.test($('#user_id').val())) {
+                        if (idJ.test($('#id').val())) {
                             inval_Arr[0] = true;
                         } else {
                             inval_Arr[0] = false;
@@ -149,8 +149,8 @@
                             alert('정보를 다시 확인하세요.')
                         }
                     });
-                    $('#user_id').blur(function() {
-                        if (idJ.test($('#user_id').val())) {
+                    $('#id').blur(function() {
+                        if (idJ.test($('#id').val())) {
                             console.log('true');
                             $('#id_check').text('');
                         } else {
@@ -159,8 +159,8 @@
                             $('#id_check').css('color', 'red');
                         }
                     });
-                    $('#user_passwd').blur(function() {
-                        if (pwJ.test($('#user_passwd').val())) {
+                    $('#passwd').blur(function() {
+                        if (pwJ.test($('#passwd').val())) {
                             console.log('true');
                             $('#pw_check').text('');
                         } else {
@@ -170,8 +170,8 @@
                         }
                     });
                     //1~2 패스워드 일치 확인
-                    $('#user_passwd2').blur(function() {
-                        if ($('#user_passwd').val() != $(this).val()) {
+                    $('#passwd2').blur(function() {
+                        if ($('#passwd').val() != $(this).val()) {
                             $('#pw2_check').text('비밀번호가 일치하지 않습니다.');
                             $('#pw2_check').css('color', 'red');
                         } else {
@@ -214,7 +214,7 @@
                        $('#input[name=user_favorite]:radio').each(function(){
                     	     user_favorite = ($(this).val());
                     	     $("#user_favorite").val() = user_favorite; 
-                       })
+                       });
                     
                     
                     $("#insertUserBtn").click(function() {
@@ -243,17 +243,17 @@
            <form id="usercheckForm" name="member">
               <div class="form-group"> 
                  <label for="user_id">Id</label> 
-                 <input type="text" class="form-control" id="user_id" name="user_id" placeholder="ID"> 
+                 <input type="text" class="form-control" id="id" name="user_id" placeholder="ID"> 
                  <div class="eheck_font" id="id_check"></div>
               </div> 
               <div class="form-group"> 
                  <label for="user_passwd">Password</label> 
-                 <input type="password" class="form-control" id="user_passwd" name="user_passwd" placeholder="PASSWORD"> 
+                 <input type="password" class="form-control" id="passwd" name="user_passwd" placeholder="PASSWORD"> 
                  <div class="eheck_font" id="pw_check"></div> 
               </div> 
                <div class="form-group"> 
                  <label for="user_passwd2">Confirm Password</label> 
-                 <input type="password" class="form-control" id="user_passwd2" name="user_passwd2" placeholder="Confirm Password"> 
+                 <input type="password" class="form-control" id="passwd2" name="user_passwd2" placeholder="Confirm Password"> 
                  <div class="eheck_font" id="pw2_check"></div> 
               </div>  
               <div class="form-group">

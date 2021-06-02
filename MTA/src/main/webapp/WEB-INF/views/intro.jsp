@@ -66,7 +66,17 @@
 					alert("로그아웃 되었습니다.");
 				});
 			
-			 					
+				
+				$(".music_genre").click(function() {
+					$("#m_genre").val($(this).html());
+					console.log($(this).html());
+					$("#cat_form").attr({
+						"method" : "GET",
+						"action" : "/mboard/boardList"
+
+					});
+					$("#cat_form").submit();
+				});
 							
 			 				
 				/* 로그인 버트 */
@@ -161,18 +171,20 @@
    	</label>
    	<div class="sidebar">
    	 <div class="categori">
+   	 <form id ="cat_form" ><input type ="hidden" name ="m_genre" id ="m_genre" />
+   	</form>
    	 	<h3 id="Ballad" class="music_genre">Ballad</h3>
    	 	<br>
-   	 	<h3 id="Rock" class="music_genre">Rock</h3>
+   	 	<h3 id="Rock" class="music_genre">Electronic</h3>
    	 	<br>
-   	 	<h3 id="R&B" class="music_genre">R&B</h3>
+   	 	<h3 id="R&B" class="music_genre">RnB</h3>
    	 	<br>
-   	 	<h3 id="New_Age" class="music_genre">New Age</h3>
+   	 	<h3 id="New_Age" class="music_genre">NewAge</h3>
    	 	<br>
    	 	<h3 id="Rap/Hiphop" class="music_genre">Rap/Hiphop</h3>
    	 	<br><br><hr>
    	 	<br><br>
-   	 	<h3>News Board</h3>
+   	 	<h3 onclick="location.href='/nboard/listnews'">News Board</h3>
    	 	<br>
    	 	<h3 id="" class="community">Community</h3>
    	 	<br>
@@ -228,7 +240,7 @@
  				<br><br>
  				<input type="button" id="mypage_purchase" class="button" style="width:470px;" value="Purchase List">
  				<br><br>
- 				<input type="button" id="mypage_shopping" class="button" style="width:470px;" value="hopping Basket">
+ 				<input type="button" id="mypage_shopping" class="button" style="width:470px;" onclick="location.href='/order/cartList'"value="hopping Basket">
  				<br><br>
  				<input type="button" id="mypage_logout" class="button" style="width:470px;" value="log Out">
 

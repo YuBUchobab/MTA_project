@@ -22,7 +22,8 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class fcommentController {
 
-	private fcommentService fcommentservice;private freeBoardService freeboardService;
+	private fcommentService fcommentservice;
+	private freeBoardService freeboardService;
 	
 	/*********************************************************
 	 * 댓글쓰기 구현하기

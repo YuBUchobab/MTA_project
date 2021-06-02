@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.mta.common.vo.PageDTO;
+import com.spring.mta.service.LikeService;
 import com.spring.mta.service.fcommentService;
 import com.spring.mta.service.fnoticeService;
 import com.spring.mta.service.freeBoardService;
@@ -34,6 +35,7 @@ public class freeBoardController {
 	private freeBoardService freeboardService;
 	private fcommentService fcommentservice;
 	private fnoticeService noticeService;
+	private LikeService likeservice;
 	
 	/*********************************************************
 	 * 글목록 구현하기(페이징 처리 목록 조회)

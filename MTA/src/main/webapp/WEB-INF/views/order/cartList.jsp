@@ -37,11 +37,15 @@
 
 <script src="/resources/include/dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/include/js/common.js"></script>
+<script type="text/javascript" src="/resources/include/js/cart.js">
+	</script>
 <script type="text/javascript">
+var total = 0;
 	$(function(){
 		$("#ListBtn").click(function(){
-			location.href ="/board/boardList";
+			location.href ="/mboard/boardList";
 		});
+		
 		
 		
 		//checkOut buttion controll 
@@ -54,7 +58,7 @@
 			   checkArr.push($(this).val());
 			   
 			   $.ajax({
-				    url : "/board/checkOut",
+				    url : "/order/checkOut",
 				    type : "post",
 				    data : { 'check' : checkArr },
 				    success : function(result){
@@ -116,12 +120,16 @@
 			   });
 			    
 			   $.ajax({
-			    url : "/board/deleteCart",
-			    type : "post",
+			    url : "/order/deleteCart",
+			    type : "get",
 			    data : { check : checkArr },
 			    success : function(result){
 			    	if(result ==1){
-			    		location.href = "/board/cartList";		
+			    			$("#f_data").attr({
+			    				"method" : "post",
+			    				"action" : "/order/cartList"
+			    			});
+			    			$("#f_data").submit();
 			    		
 			    	}else{
 			    		alert("장바구니 삭제 실패. 관리자에게 문의하세요.");
@@ -150,11 +158,11 @@
 </style>
 </head>
 <body>
-
+	<h3>Cart List</h3>
 	<form name= "f_data" id = "f_data">
 				<input type ="hidden" name = "m_no" value ="${cart.m_no}"/>
-				<input type = "hidden" name = "user_id" id = "user_id" value = "test"/>
-				
+			<input type = "hidden" name = "user_id" id = "user_id" value = "${userInfo.user_id}"/>
+
 			</form>	
 		<div id="boardsList">
 			<table summary="장바구니 리스트" class="table">
@@ -170,8 +178,8 @@
 					<tr>
 						<th>선택</th>
 						<th>앨범커버</th>						
-						<th>가격</th>
 						<th>작성자</th>
+						<th>가격</th>
 					
 					</tr>
 				</thead>

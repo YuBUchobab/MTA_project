@@ -8,8 +8,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.mta.vo.MusicBoardVO;
 import com.spring.mta.vo.freeBoardVO;
 import com.spring.common.file.FileUploadUtil;
+import com.spring.mta.dao.MusicBoardDao;
 import com.spring.mta.dao.freeDao;
 
 
@@ -21,6 +23,7 @@ public class freeBoardServiceImpl implements freeBoardService {
 	
 	@Setter(onMethod_ =@Autowired )
 	private freeDao fboardDao;
+	private MusicBoardDao mDao;
 
 	@Override
 	public List<freeBoardVO> freeboardList(freeBoardVO fvo) {
@@ -100,6 +103,7 @@ public class freeBoardServiceImpl implements freeBoardService {
 				return result;
 	}
 
+	
 	
 
 
