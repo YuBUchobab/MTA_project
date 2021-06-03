@@ -120,7 +120,7 @@
    					<td class="col-md-3">이미지</td>
    					<td colspan="3" class="col-md-9 text-left">
                          <c:if test="${not empty detail.n_image }">
-                              <img src="/uploadStorage/mta/board/${detail.n_image }"/>
+                              <img src="/uploadStorage/news/${detail.n_image }"/>
                          </c:if>	
 					</td>		  
    				</tr> 

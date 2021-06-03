@@ -67,6 +67,7 @@ input[type="range"] {
 	let buttonCheck = 0; // 수정버튼과 삭제버튼을 구별하기 위한 변수 (비밀번호가 일치했을 때 )
 	
 	$(function() {
+		console.log(${detail.m_stock});
 		
 		//음악파일 가져오기 및 볼륨 제어  
 		let path = $("#m_file").val();
@@ -163,7 +164,7 @@ input[type="range"] {
 							console.log("m_no: "+currM_no); */
 
 							$.ajax({
-										url : "/board/recommend",
+										url : "/mboard/recommend",
 										type : "get",
 										data : {m_no : m_no},
 										success : function(result) {
@@ -172,7 +173,7 @@ input[type="range"] {
 												alert("게시물을 추천하셨습니다.");
 												console.log(recommend_no);
 												$(
-														".btn[data-num='"+ m_no + "']").html(recommend_no).append(하트);
+														".btn[data-num='"+ m_no + "']").html(recommend_no).append(heart);
 
 											} else {
 												alert("이미 추천하신 게시물입니다.");
@@ -187,7 +188,6 @@ input[type="range"] {
 					
 
 				});
-		
 		
 		//장바구니 버튼 이벤트 
 		$("#addCartBtn").click(function() {
@@ -307,7 +307,7 @@ input[type="range"] {
 				<input type="hidden" name="b_num" id="b_num" value="${detail.m_no}">
 				<input type="hidden" name="user_id" id="user_id" value="${userInfo.user_id}" />
 				<label for="user_pwd">비밀번호 : </label> 
-				<input type="password" name="user_pwd" id="user_pwd" class="form-control" />
+				<input type="password" name="user_passwd" id="user_pwd" class="form-control" />
 
 				<button type="button" id="pwdBut" class="btn btn-default btn-sm">확인</button>
 				<button type="button" id="pwdButCancel"
@@ -387,6 +387,7 @@ input[type="range"] {
 			<div>
 				<c:choose>
 					<c:when test="${detail.m_price !=0}">
+						
 						<c:if test="${detail.m_stock !=0 }">
 							<td><button type="button" class="btn btn-default"
 									id="paymentBtn" aria-label="Left Align">
@@ -407,7 +408,7 @@ input[type="range"] {
 						</c:if>
 					</c:when>
 					<c:otherwise>
-						<td><a href="/uploadStorage/audioFile/${detail.m_file}"
+						<td><a href="/uploadStorage/audioFile/${detail.m_file}" download
 							target="_blank"><button type="button" class="btn btn-default"
 									id="fileDownBtn" aria-label="Left Align">
 									<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
@@ -424,6 +425,7 @@ input[type="range"] {
 				
 			</div>
 		</div>
+			
 		<hr />
 			<h4 class="col-md-2" id="h">댓글 작성</h4>
 			 	<div class="container-fluid">

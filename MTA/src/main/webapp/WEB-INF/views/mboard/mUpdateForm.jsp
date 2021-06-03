@@ -68,7 +68,8 @@
 	<body>
 
 	<div class="container">
-		<h2 class="text-center">글수정</h2>
+	
+		<h3><b>작성자 : ${userInfo.user_id}</b></h3>
 		<div class="text-cencter">
 			<form id="f_updateForm" name="f_updateForm">
 				<input type="hidden" id="m_no" name="m_no" value="${updateData.m_no }"/>

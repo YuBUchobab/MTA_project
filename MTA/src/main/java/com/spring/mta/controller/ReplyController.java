@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.mta.service.ReplyService;
 import com.spring.mta.vo.ReplyVO;
-
+import com.spring.mta.vo.UserVO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -78,10 +78,13 @@ public class ReplyController {
 	
 	@PostMapping(value = "/replyInsert", consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE}) 
-	public ResponseEntity<String> replyInsert(@RequestBody ReplyVO rvo, HttpSession session){
+	public ResponseEntity<String> replyInsert(@RequestBody ReplyVO rvo,  HttpSession session){
 		log.info("replyInsert 호출 성공");
 		log.info("ReplyVO :" + rvo);
 		int result = 0; 
+		
+		UserVO uvo = (UserVO)session.getAttribute("userInfo");
+		rvo.setUser_id(uvo.getUser_id());
 		
 		result = replyService.replyInsert(rvo);
 		return result==1 ? new ResponseEntity<String>("SUCCESS", HttpStatus.OK):

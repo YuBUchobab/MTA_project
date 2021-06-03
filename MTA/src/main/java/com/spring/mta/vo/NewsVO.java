@@ -12,6 +12,8 @@ public class NewsVO extends commonVO{
 	    private String n_regdate;
 	    private String n_title="";
 	    private String n_note="";
+	    private String user_id="";
+	    
 	    
 	    private String n_image="";	// 파일 경로
 	    private MultipartFile file; //파일 자체

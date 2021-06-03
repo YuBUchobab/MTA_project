@@ -104,7 +104,7 @@
 			SELECT
 		
 			m_no, m_title, m_name, m_coverimage, m_bpm, m_explan, m_file,
-			m_regdate, m_recommentCnt m_views, user_id, m_price, m_isfree, m_genre
+			m_regdate, m_recommentcnt, m_views, user_id, m_price, m_isfree, m_genre
 			
 			FROM music_board
 			

@@ -2,6 +2,7 @@ package com.spring.mta.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.spring.mta.common.vo.PageDTO;
 import com.spring.mta.service.NewsService;
 import com.spring.mta.vo.NewsVO;
+import com.spring.mta.vo.UserVO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -60,12 +62,17 @@ public class NewsController {
 	 
 	   @RequestMapping(value = "/insertnews", method = RequestMethod.POST)
 	   // @PostMapping("/boardInsert")
-	   public String insertnews(NewsVO nvo, Model model) throws Exception {
+	   public String insertnews(NewsVO nvo, Model model, HttpSession session) throws Exception {
 	      log.info("insertNews");
 	      log.info("nvo" + nvo);
 	     
+	      UserVO uvo = (UserVO)session.getAttribute("userInfo");
+		  nvo.setUser_id(uvo.getUser_id());
+	      
 	      int result = 0;
 	      String url = "";
+	      
+	      
 	      
 	      result = newsService.insertnews(nvo);
 	      if(result == 1) { 

@@ -48,7 +48,7 @@
     			if(confirm("결제를 취소하고 목록으로 돌아가시겠습니까?"))	
     			 
     			 alert("결제가 취소되었습니다.") ;
-    			location.href="/mboard/boardList";
+    			location.href="/order/cartList";
     			 });
     		 
     		 

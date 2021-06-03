@@ -101,7 +101,7 @@ var total = 0;
 			  if(confirm_val) {
 			   var checkArr = new Array();
 			   
-			   $("input[class='check']:checked").each(function(){
+			   $("input[class='chkbox']:checked").each(function(){
 			    checkArr.push($(this).attr("data-cartNum"));
 			   });
 			    
@@ -110,6 +110,7 @@ var total = 0;
 			    type : "get",
 			    data : { check : checkArr },
 			    success : function(result){
+			    	console.log(result);
 			    	if(result ==1){
 			    			$("#f_data").attr({
 			    				"method" : "get",

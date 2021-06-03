@@ -21,7 +21,7 @@
    <select id="listnews" parameterType="news" resultType="news">
     <![CDATA[
      	 SELECT 
-     	 n_no, n_image, n_title, n_note, n_text, to_char(n_regdate, 'YYYY-MM-DD') as n_regdate, n_image
+     	 n_no, n_image, n_title, n_note, n_text, to_char(n_regdate, 'YYYY-MM-DD') as n_regdate, n_image 
       	 FROM (
      		 select /*+index_desc(news news_pk)*/
       			rownum as rnum, n_no, n_image, n_title, n_note, n_text, n_regdate
@@ -46,8 +46,8 @@
     
    <!-- 게시물 등록 -->
     <insert id = "insertnews" parameterType = "news">
-      INSERT INTO news (n_no, n_title, n_note, n_text, n_image )
-       VALUES (news_seq.nextval, #{n_title}, #{n_note}, #{n_text}, #{n_image})
+      INSERT INTO news (n_no, n_title, n_note, n_text, n_image, user_id )
+       VALUES (news_seq.nextval, #{n_title}, #{n_note}, #{n_text}, #{n_image}, #{user_id})
    </insert>
      
      

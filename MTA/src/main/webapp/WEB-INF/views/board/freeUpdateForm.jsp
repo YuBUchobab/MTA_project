@@ -90,7 +90,7 @@
                <tr>
                   <td class = "ac">작 성 자</td>
                   <td colspan = "3">
-                  <input type = "text" value="프로토타입" ></td>
+                  <input type = "text" value="${userInfo.user_id }" ></td>
                </tr>   
                <tr>
                   <td class = "ac">글 제 목</td>

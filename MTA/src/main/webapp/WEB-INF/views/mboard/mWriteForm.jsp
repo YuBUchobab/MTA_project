@@ -70,6 +70,21 @@
 					location.href = "/mboard/boardList";
 				});
 				
+				// 무료 배포 선택 여부에 따라 금액 입력 비활성화 설정. 
+				$("input[name ='m_isfree']").click(function(){
+					if($("input[name ='m_isfree']:checked").val()== "1"){
+						$("#m_price").attr("disabled",true);
+						
+					}else{
+						$("#m_price").attr("disabled",false);
+						
+						
+						
+						
+					}
+				});
+				
+				
 			});
 		
 		</script>
@@ -79,7 +94,7 @@
 	<body>
 		<div class ="container">
 			<!-- 	<h2 class ="text-center">글작성</h2> -->
-
+		<h3><b>작성자 : ${userInfo.user_id}</b></h3>
 		<form id="f_writeForm">
 			<input type ="hidden" id ="user_id" name = "user_id" value ="${userInfo.user_id}"/> <!-- session 값으로 추후 로그인 정보 전달 요망 --> 
 			<table class="table table-light">
@@ -125,12 +140,13 @@
 
 					<tr>
 						<th><label for="m_isfree">Distribute for Free : </label></th>
-						<td><div class="btn-group btn-group-toggle" data-toggle="buttons">
-								<label class="btn btn-primary"> <input type="radio" name ="distribution" value = "1">Y</label>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn btn-primary"> <input type="radio" name = "distribution" value ="0">N</label>
-								</div>
-							</div></td>
+						<td>
+								<input type="radio" name = "m_isfree" value = "1" ><label class = " ">Y</label>
+								
+								<input type="radio" name = "m_isfree" value ="0"><label class = " ">N</label>
+								
+							</td>
+					</tr>
 					</tr>
 					<tr>
 						<th><label for="m_price">Price : </label></th>

@@ -2,8 +2,7 @@ package com.spring.mta.controller;
 
 import java.util.List;
 
-
-
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -132,14 +131,15 @@ public class MusicBoardController {
 	//추천 수 증가 
 		@ResponseBody
 		@RequestMapping(value ="/recommend", method = RequestMethod.GET)
-		public String recommend(@ModelAttribute("data") MusicBoardVO mvo,  @RequestParam(value = "m_no") int m_no)throws Exception {
+		public String recommend(@ModelAttribute("data") MusicBoardVO mvo, HttpSession session, @RequestParam(value = "m_no") int m_no)throws Exception {
 			log.info("recommend호출 ");
 			int likecheck = 0 ;
 			int result =0;
 			int likeAdd =0;
 			LikeCntVO lvo = new LikeCntVO();
 			
-			lvo.setUser_id("test");
+			UserVO uvo = (UserVO) session.getAttribute("userInfo");
+			lvo.setUser_id(uvo.getUser_id());
 			lvo.setM_no(m_no);
 			likecheck = likeService.likeCheck(lvo);
 			
@@ -148,7 +148,7 @@ public class MusicBoardController {
 				mvo.setM_no(m_no);
 				result = musicBoardService.recommend(mvo);
 				
-				lvo.setUser_id("test");
+				lvo.setUser_id(uvo.getUser_id());
 				lvo.setM_no(m_no);
 				likeAdd = likeService.likeAdd(lvo);
 				

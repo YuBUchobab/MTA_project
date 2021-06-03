@@ -185,7 +185,7 @@ function goPage() {
 												alert("게시물을 추천하셨습니다.");
 												console.log(recommend_no);
 												$(
-														".btn[data-num='"+ m_no + "']").html(recommend_no).append(하트);
+														".btn[data-num='"+ m_no + "']").html(recommend_no).append(heart);
 
 											} else {
 												alert("이미 추천하신 게시물입니다.");
@@ -444,7 +444,7 @@ function goPage() {
 											<td class="text-center">무료 배포</td>
 										</c:otherwise>
 									</c:choose>								
-									<td class="name">${board.m_name}</td>
+									<td class="name">${board.user_id}</td>
 									<td class ="genre">${board.m_genre}</td>
 									<td class="">
 										<button type="button" class="btn btn-default btn-xs"  data-num="${board.m_no}" data-recom ="${board.m_recommentcnt }">				
@@ -479,7 +479,7 @@ function goPage() {
 										</c:when>
 										
 										<c:otherwise>
-											<td><a href="/uploadStorage/audioFile/${board.m_file}" target="_blank"><button type="button" class="btn btn-default"
+											<td><a href="/uploadStorage/audioFile/${board.m_file}" downlaod><button type="button" class="btn btn-default"
 											id="fileDownBtn" aria-label="Left Align">
 											<span class="glyphicon glyphicon-save" aria-hidden="true"></span>
 										
