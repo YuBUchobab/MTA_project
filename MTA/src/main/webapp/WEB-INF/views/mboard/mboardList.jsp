@@ -233,25 +233,17 @@ function goPage() {
 
 		//장바구니 버튼 이벤트 
 		$(".btn.btn-success.cart").click(function() {
-			$("#m_no").val($(this).attr("data-no"));
-			
 			if (confirm("장바구니에 담으시겠습니까?")) {
-				
+				var m_no = $(this).parents("tr").attr("data-num");
+
 				$.ajax({
-							url : "/order/addCart",
-							type : "post",
-							data : $("#f_data").serialize(),
+							url : "/basket/cart",
+							type : "get",
+							data : {m_no : m_no},
 							success : function(result) {
-								console.log(result);
 								if (result == 1) {
-									
 								if(confirm("장바구니에 상품을 담았습니다. 장바구니로 이동하시겠습니까?")){
-									$("#f_data").attr({
-										"method" : "GET",
-										"action" : "/order/cartList"
-									});
-									$("#f_data").submit();
-									
+									location.href = "/order/cartList";
 								}
 										
 								} else {
@@ -264,8 +256,7 @@ function goPage() {
 
 			}
 
-
-		});
+	});
 		
 		
 		/*rank 영역 클릭 시 상세 페이지 이동 */

@@ -69,6 +69,21 @@ public class CartController {
 		return "order/cartList";
 	}
 	
+	//ordrList
+	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
+	public String cartList2(@ModelAttribute("cart") CartVO cvo, UserVO uvo,Model model, HttpSession session) {
+		log.info("orderList call");
+		 // 추후 세션 정보로 변경해주어야 함. 
+		UserVO uvo2 = (UserVO) session.getAttribute("userInfo");
+		cvo.setUser_id(uvo2.getUser_id());
+		List<CartVO> list = cartService.CartList(cvo);
+		model.addAttribute("cartList",list);
+		
+		//String user_id = cvo.getUser_id();
+		
+		return "order/orderList";
+	}
+	
 	
 	
 	// 카트 삭제

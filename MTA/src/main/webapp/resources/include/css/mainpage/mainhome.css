@@ -17,7 +17,7 @@
 	float:left;
 	border-style: solid;
     border-width:3px;
-    background-color:rgb(165, 190, 194);
+    
     
 }
 
@@ -28,7 +28,7 @@
 	text-align:center;
 	border-style: solid;
     border-width:3px;
-    background-color:rgb(165, 190, 194);
+  
 } 
 #like_chart{
 	width:45%;
@@ -39,7 +39,7 @@
 	float:right;
 	border-style: solid;
     border-width:3px;
-	background-color:rgb(165, 190, 194);
+
 	font-family:Geogia;
 	
 }

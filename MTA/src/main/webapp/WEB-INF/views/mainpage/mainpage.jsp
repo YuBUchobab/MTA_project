@@ -23,31 +23,36 @@
       <link rel="shortcut icon" type = "text/css" href="/resources/image/icon.png" />
       <link rel="apple-touch-icon" type = "text/css" href="/resources/image/icon.png" />
       <!-- 모바일 웹 페이지 설정 끝 -->
+      <style type="text/css">
+      .col-md-2.nimage{
+      	float:left;
+      	padding: 0;
       
+      	border: 5px solid gray;
+      	height: 150px;
+      	width: 200px;
+      }
+      
+      td{
+      	padding: 0;
+      	margin: 0;
+      }
+      </style>
       <!--[if lt IE 9]>
       
       <script src
       ="../js/html5shiv.js"></script>
       <![endif]-->
       <link rel="stylesheet" type = "text/css" href="/resources/include/css/leftslide.css"/>
-      <link rel="stylesheet" type = "text/css" href="/resources/include/css/mainpage/mainhome.css"/>
       <link rel="stylesheet" type = "text/css" href="/resources/include/css/mainpage/main_login.css"/>
-      <style type="text/css">
-      <style>
-  table {
-    width: 100%;
-    border: 1px solid #444444;
-    border-collapse: collapse;
-  }
-  th, td {
-    border: 1px solid #444444;
-    
-  }
-</style>
-      </style>
+
+
+
       <title>MTA에 오신걸 환영합니다.</title>
       <script type="text/javascript" src="/resources/include/js/jquery-3.6.0.min.js"></script>
-      
+        <link rel="stylesheet" href="/resources/include/dist/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="/resources/include/dist/css/bootstrap-theme.css">
+		<script src="/resources/include/dist/js/bootstrap.min.js"></script>
       <script type="text/javascript">
 	  var clicks= 0;
       $(function(){
@@ -82,8 +87,8 @@
 		<div class = "container">
 		</br><br></br></br>
 			<!--뉴스 게시판-->
-			<div id="news_chart"><h4>***News Chart***</h4>
-				<table class="table" style="width:100%;">
+			<div id="news_chart" style="width:80%;"><h4>***News Chart***</h4>
+				<table class="table table-hover" style="width:100%;">
 				<thead>
 				<colcolgroup>
 				  <col width ="10%" />
@@ -116,13 +121,29 @@
       				</c:choose>
       				</tbody>
 				</table>
+				<table class="table">
+      				<tr>
+      				<c:choose>
+      					<c:when test="${not empty newsList}">
+      						<c:forEach var="news" items="${newsList}" varStatus="status">
+      							
+      								<td>
+      								<img class="col-md-2 nimage"  src="/uploadStorage/news/${news.n_image}" />
+									</td>
+      							
+      						</c:forEach>
+      					</c:when>
+      				
+      				</c:choose>
+      				</tr>
+      			</table>
 			</div>
 			<br><br><br><br>
 			<!-- 뮤직 차트-->
-			<div id="music_chart">
+			
 				<!--랭킹 게시판-->
 				<div id="rank_chart"><h4>***Music Chart***</h4>
-					<table summary="음악 랭크 차트" class="table">
+					<table summary="음악 랭크 차트" class="table table-hover">
 						<thead>
 		                  <tr>
 		                     <th data-value="m_no" class="order text-center">No</th>
@@ -164,7 +185,7 @@
 				<!--장르 음악게시판-->
 				<div id="like_chart">
 					<h4>***Like Chart***</h4>				
-				<table summary="음악 랭크 차트" class="table">
+				<table summary="음악 랭크 차트" class="table table-hover col-md-8">
 						<thead>
 		                  <tr>
 		                     <th data-value="m_no" class="order text-center">No</th>
@@ -202,7 +223,7 @@
 						</tbody>
 					</table>	
 				</div>
-			</div>
+			
 		</div>
    </body>
 </html>

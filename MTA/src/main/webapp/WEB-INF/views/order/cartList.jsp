@@ -50,61 +50,47 @@ var total = 0;
 		
 		//checkOut buttion controll 
 		$("#checkOutBtn").click(function(){
-			   var checkArr = new Array();
-			   
-			   $("input[class='check']:checked").each(function(){
-			    checkArr.push($(this).attr("data-cartNum"));
-			   });
-			   checkArr.push($(this).val());
-			   
-			   $.ajax({
-				    url : "/order/checkOut",
-				    type : "post",
-				    data : { 'check' : checkArr },
-				    success : function(result){
-						if(result == 1){
-							alert("dddd")
-						}else{
-							alert("시스템 오류");
-						}
-				    }
-				   });
-				   
+			if(confirm("결제페이지로 이동하시겠습니까?")){
+				  location.href="/order/orderList";
+			}
+			 
+		
 			   });
 			   
 			 
 			    
 		
 
-		 //장바구니 리스트 전체 선택  
+		//장바구니 리스트 전체 선택  
 		$("#allCheck").click(function(){
 			 var chk = $("#allCheck").prop("checked");
 			 if(chk) {
-			  $(".check").prop("checked", true);
+			  $(".chkbox").prop("checked", true);
+			  itemSum();
 			 } else {
-			  $(".check").prop("checked", false);
+			  $(".chkbox").prop("checked", false);
+			  itemSum();
 			 }
 			});
 		 
 		 //개별 선택 시 전체 선택 해제
-		 $(".check").click(function(){
+		 $(".chkbox").click(function(){
 			  $("#allCheck").prop("checked", false);
+			  itemSum();
 			 });
 		 
 		 
-		 
+		 var total =0 ;
+
 		 //장바구니 가격 구하기. 
 		 $(".check").click(function(){
-			 
-			 $("input[class='check']:checked").each(function(){
-				 var total =0 
-				 
-				total += ${sum}+$(this).attr("data-mPrice");
-					$("#total").val(total) ;
-				   });
-			
+			 if($("input[class='chkbox']").is(":checked")){
+		            itemSum();
+
+		        }else {
+		        	itemSum();
+		        }
 		 });
-		 
 		 
 		 
 		 
@@ -126,7 +112,7 @@ var total = 0;
 			    success : function(result){
 			    	if(result ==1){
 			    			$("#f_data").attr({
-			    				"method" : "post",
+			    				"method" : "get",
 			    				"action" : "/order/cartList"
 			    			});
 			    			$("#f_data").submit();
@@ -144,6 +130,19 @@ var total = 0;
 		
 	});// 최상위 종결 . 
 	
+	
+	function itemSum(){
+	    var str = "";
+	    var sum = 0;
+	    var count = $(".chkbox").length;
+	    for(var i=0; i < count; i++ ){
+	        if( $(".chkbox")[i].checked == true ){
+	         sum += parseInt($(".chkbox")[i].value);
+	        }
+	    }
+	    $("#total").val(sum);
+	     
+	 }
 
 </script>
 
@@ -178,7 +177,7 @@ var total = 0;
 					<tr>
 						<th>선택</th>
 						<th>앨범커버</th>						
-						<th>작성자</th>
+						<th>제목</th>
 						<th>가격</th>
 					
 					</tr>
@@ -194,7 +193,7 @@ var total = 0;
 						<c:set var="sum" value="0" />
 							<c:forEach var ="cart" items="${cartList}" varStatus="status"> <!-- items 의 항목을 모두 반복 -->
 								<tr class ="text-center" > 
-									<td class ="text-left"><input type="checkbox" class ="check" name ="check" data-cartNum ="${cart.cart_id}" data-mPrice= "${cart.m_price}" value ="${cart.cart_id}"/></td>
+									<td class ="text-left"><input type="checkbox" class ="chkbox" name ="check" data-cartNum ="${cart.cart_id}" data-mPrice= "${cart.m_price}" value ="${cart.m_price}"/></td>
 									<td class = "text-left"><img src="/uploadStorage/coverImg/${cart.m_coverimage}"/></td>
 									<td class = "goDetail text-left">${cart.m_title}</td>
 									<td class ="text-left">${cart.m_price}</td>
@@ -205,7 +204,7 @@ var total = 0;
 							</c:forEach>
 							<div class="text-right">
 								 <div class="sum">
-									  총 합계 : <input type = "number" id ="total" disabled="disabled"/>원
+									  총 합계 : <input type = "number" id ="total" readonly="readonly" value ="0"/>원
 									 </div>
 								</div>
 						</c:when>
@@ -216,7 +215,7 @@ var total = 0;
 						</c:otherwise>
 					</c:choose>
 				</tbody>
-			</table>	
+			</table>
 			<div class ="text-center">
 				<button id = "checkOutBtn" class ="btn btn-success" data-cartNum ="${cart.cart_id}">Check Out</button>
 				<button id = "ListBtn" class ="btn btn-success">Back to List</button>	

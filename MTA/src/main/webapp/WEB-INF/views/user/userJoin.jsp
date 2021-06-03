@@ -280,13 +280,16 @@
                     <input type="radio" name="user_favorite" id="user_favorite" value="ballade"> 발라드
                </label>
                <label class="radio-inline">
-                    <input type="radio" name="user_favorite" id="user_favorite" value="hiphop"> 힙합
+                    <input type="radio" name="user_favorite" id="user_favorite" value="Electronic"> 일렉트로닉
                </label>
                <label class="radio-inline">
-                    <input type="radio" name="user_favorite" id="user_favorite" value="r&b"> 알앤비
+                    <input type="radio" name="user_favorite" id="user_favorite" value="Rnb"> 알앤비
                </label>
                <label class="radio-inline">
-                    <input type="radio" name="user_favorite" id="user_favorite" value="newage"> 뉴에이지
+                    <input type="radio" name="user_favorite" id="user_favorite" value="Rap"> 힙합
+               </label>
+               <label class="radio-inline">
+                    <input type="radio" name="user_favorite" id="user_favorite" value="new age"> 뉴에이지
                </label>
             </div>
             

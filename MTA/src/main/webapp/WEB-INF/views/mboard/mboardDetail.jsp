@@ -105,17 +105,20 @@ input[type="range"] {
 			$("#pwdChk").css("visibility", "visible");
 			$("#msg").text("계정 비밀번호를 입력해 주세요.").css("color", "000099");
 			buttonCheck = 1;  
-			$("#f_data").attr("action", "/board/updateForm");
+		/* 	$("#f_data").attr("action", "/mboard/updateForm");
 			$("#f_data").submit();
-			
+			 */
+			 boardPwdConfirm();
 		});
 		//삭제버튼 클릭 시 처리 이벤트
 		$("#boardDeleteBtn").click(function(){
 			$("#pwdChk").css("visibility", "visible");
 			$("#msg").text("계정 입력한 비밀번호를 입력해 주세요.").css("color", "000099"); 
-			$("#f_data").attr("action", "/board/mBoardDelete");
-			$("#f_data").submit();
+		/* 	$("#f_data").attr("action", "/mboard/boardDelete");
+			$("#f_data").submit(); */
 			 buttonCheck = 2; 
+			boardPwdConfirm();
+			
 		});
 		
 		//비밀번호 확인 버튼 클릭 시 처리 이벤트
@@ -292,8 +295,8 @@ input[type="range"] {
 	
 	<div class="container">
 		<form name="f_data" id="f_data">
-			<input type="hidden" name="m_no" id="m_no" value="${detail.m_no}" /> <input
-				type="hidden" name="user_id" id="user_id" value="test" />
+			<input type="hidden" name="m_no" id="m_no" value="${detail.m_no}" /> 
+			<input type="hidden" name="user_id" id="id" value="${userInfo.user_id}" />
 		</form>
 		<form name="file" id="file">
 			<input type="hidden" name="m_file" id="m_file"
@@ -302,8 +305,9 @@ input[type="range"] {
 		<div id="pwdChk" class="authArea  col-md-9 text-left">
 			<form name="f_pwd" id="f_pwd" class="form-inline">
 				<input type="hidden" name="b_num" id="b_num" value="${detail.m_no}">
-				<label for="b_pwd">비밀번호 : </label> <input type="password"
-					name="b_pwd" id="b_pwd" class="form-control" />
+				<input type="hidden" name="user_id" id="user_id" value="${userInfo.user_id}" />
+				<label for="user_pwd">비밀번호 : </label> 
+				<input type="password" name="user_pwd" id="user_pwd" class="form-control" />
 
 				<button type="button" id="pwdBut" class="btn btn-default btn-sm">확인</button>
 				<button type="button" id="pwdButCancel"
